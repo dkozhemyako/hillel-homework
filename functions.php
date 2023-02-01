@@ -143,4 +143,20 @@ function renderTemplate($name, array $data = []) {
 
     return $result;
 }
+
+function differenceDateH($date){
+    $now = time();
+    $userdate = strtotime($date);
+    $calc = floor(($userdate - $now)/3600);
+
+    if($calc < 0) {$calc = NULL;}
+    if($calc <= 24) {$badge = 'danger';}
+    if($calc > 24) {$badge = 'success';}
+    if($date == NULL) {$badge = 'style="display: none';}
+
+    $result = ['badge'=>$badge, 'calc'=>$calc.' h'];
+
+    return $result;
+
+}
 ?>
