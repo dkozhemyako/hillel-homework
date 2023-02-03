@@ -144,19 +144,17 @@ function renderTemplate($name, array $data = []) {
     return $result;
 }
 
-function differenceDateH($date){
+function differenceDateH($date) {
     $now = time();
     $userdate = strtotime($date);
-    $calc = floor(($userdate - $now)/3600);
+    $calc = floor(($userdate - $now) / 3600);
 
-    if($calc < 0) {$calc = NULL;}
-    if($calc <= 24) {$badge = 'danger';}
-    if($calc > 24) {$badge = 'success';}
-    if($date == NULL) {$badge = 'style="display: none';}
+    $calc <= 24 ? $badge = 'danger' : $badge = 'success';
 
-    $result = ['badge'=>$badge, 'calc'=>$calc.' h'];
-
-    return $result;
-
+    if ($calc < 0) {
+        $calc = NULL;
+    }
+    
+    return $result = ['badge' => $badge, 'calc' => $calc . ' h'];
 }
 ?>
