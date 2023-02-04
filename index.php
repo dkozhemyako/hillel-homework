@@ -32,7 +32,7 @@ $tasks =
       'id' => 1,
       'header' => 'Назва задачі 1',
       'body' => 'Опис задачі 1',
-      'deadline_date' => '03.02.2023'
+      'deadline_date' => '04.02.2023'
     ]
   ],
   'task_to_do' =>
@@ -41,7 +41,7 @@ $tasks =
     'id' => 2,
     'header' => 'Назва задачі 2',
     'body' => 'Опис задачі 2',
-    'deadline_date' => '04-02-2023'
+    'deadline_date' => '06-02-2023'
     ]
   ],
   'task_in_progress' =>
@@ -50,7 +50,7 @@ $tasks =
     'id' => 3,
     'header' => 'Назва задачі 3',
     'body' => 'Опис задачі 3',
-    'deadline_date' => '05.02.2023'
+    'deadline_date' => '10.02.2023'
     ]
   ],
   'task_done' =>

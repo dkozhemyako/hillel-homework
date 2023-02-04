@@ -144,7 +144,7 @@ function renderTemplate($name, array $data = []) {
     return $result;
 }
 
-function differenceDateH($date) {
+function differenceDateH($date, $add_string = "h") {
     $now = time();
     $userdate = strtotime($date);
     $calc = floor(($userdate - $now) / 3600);
@@ -152,9 +152,12 @@ function differenceDateH($date) {
     $calc <= 24 ? $badge = 'danger' : $badge = 'success';
 
     if ($calc < 0) {
-        $calc = NULL;
+        $calc = 0;
     }
     
-    return $result = ['badge' => $badge, 'calc' => $calc . ' h'];
+    $length = strlen($calc.$add_string);
+    $calc = str_pad($calc, $length, $add_string, STR_PAD_RIGHT);
+
+    return $result = ['badge' => $badge, 'calc' => $calc];
 }
 ?>
