@@ -23,7 +23,11 @@
           <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-            <?=$name_project_sidebar?>
+
+               <?php foreach($projects['project'] as $key => $project):?>
+                <?=renderTemplate('project.php', ['project' => $project])?>
+               <?php endforeach;?>
+               
               <li class="nav-item">
               <a href="index.php" class="nav-link">
                 <i class="nav-icon fas fa-plus"></i>

@@ -1,9 +1,9 @@
 <li class="nav-item">
-    <a href="index.php" class="nav-link active">
+    <a href="index.php?id=<?=$project['id']?>" class="nav-link<?=$project['active'] === true ? ' active' : ''?>">
         <i class="nav-icon fas fa-columns"></i>
         <p>
-        <?=htmlentities('Назва проекту')?>
-        <span class="badge badge-info right">2</span>
+        <?=htmlentities($project['name_project'])?>
+        <span class="badge badge-info right"><?=$project['count_task_in_project']?></span>
         </p>
     </a>
 </li>

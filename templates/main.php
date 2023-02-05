@@ -34,7 +34,11 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="backlog">
-            <?=$card_backlog?>
+
+          <?php foreach($tasks['task_backlog'] as $task):?>
+          <?=renderTemplate('card.php', ['task' => $task])?>
+          <?php endforeach;?>
+  
             </div>
           </div>
           <div class="card card-row card-primary">
@@ -44,7 +48,11 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="to-do">
-            <?=$card_to_do?>
+              
+          <?php foreach($tasks['task_to_do'] as $task):?>
+          <?=renderTemplate('card.php', ['task' => $task])?>
+          <?php endforeach;?>
+
             </div>
           </div>
           <div class="card card-row card-default">
@@ -54,7 +62,11 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="in-progress">
-            <?=$card_in_progress?>
+              
+            <?php foreach($tasks['task_in_progress'] as $task):?>
+          <?=renderTemplate('card.php', ['task' => $task])?>
+          <?php endforeach;?>
+
             </div>
           </div>
           <div class="card card-row card-success">
@@ -64,7 +76,11 @@
               </h3>
             </div>
             <div class="card-body connectedSortable" data-status="done">
-            <?=$card_done?>
+              
+          <?php foreach($tasks['task_done'] as $task):?>
+          <?=renderTemplate('card.php', ['task' => $task])?>
+          <?php endforeach;?>
+
             </div>
           </div>
         </div>
