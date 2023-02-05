@@ -12,10 +12,16 @@
                   <p>
                     <?=htmlentities($task['body'])?>
                   </p>
-                  <?php if(!empty($task['deadline_date'])){
-                  echo 
-                  '<small class="badge badge-' . differenceDateH($task['deadline_date'])['badge'] . '"><i class="far fa-clock"></i>' . ' ' . differenceDateH($task['deadline_date'])['calc'] . '</small>';
-                  }?>
+
+                  <?php if (!empty($task['deadline_date'])) : ?>
+
+                  <small class="badge badge-<?=differenceDateH($task['deadline_date'])['badge']?>">
+                    <i class="far fa-clock"></i>
+                    <?=differenceDateH($task['deadline_date'])['calc']?>
+                  </small>
+
+                  <?php endif; ?>
+
                   </div>
               </div>
               

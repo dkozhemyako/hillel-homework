@@ -150,14 +150,10 @@ function differenceDateH($date, $add_string = "h") {
     $calc = floor(($userdate - $now) / 3600);
 
     $calc <= 24 ? $badge = 'danger' : $badge = 'success';
-
-    if ($calc < 0) {
-        $calc = 0;
-    }
+    $calc < 0 ? $calc = 0 : $calc;
     
-    $length = strlen($calc.$add_string);
+    $length = strlen($calc . $add_string);
     $calc = str_pad($calc, $length, $add_string, STR_PAD_RIGHT);
 
     return $result = ['badge' => $badge, 'calc' => $calc];
 }
-?>

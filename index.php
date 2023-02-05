@@ -4,17 +4,14 @@ require_once('functions.php');
 $projects=
 
 [
-  'project_1' => 
+  'project' => 
   [
     [
       'id' => 1,
       'name_project' => 'Проект 1',
       'count_task_in_project' => '9',
       'active' => true
-    ]
-  ],
-  'project_2' => 
-  [
+    ],
     [
       'id' => 2,
       'name_project' => 'Проект 2',
@@ -91,4 +88,3 @@ $layout = renderTemplate(
 
 print $layout;
 
-?>
