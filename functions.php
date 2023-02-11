@@ -151,9 +151,8 @@ function differenceDateH($date, $add_string = "h") {
 
     $calc <= 24 ? $badge = 'danger' : $badge = 'success';
     $calc < 0 ? $calc = 0 : $calc;
-    
-    $length = strlen($calc . $add_string);
-    $calc = str_pad($calc, $length, $add_string, STR_PAD_RIGHT);
 
+    $calc = sprintf('%d %s', $calc, $add_string);
+    
     return $result = ['badge' => $badge, 'calc' => $calc];
 }
