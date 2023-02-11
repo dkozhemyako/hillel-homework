@@ -1,24 +1,23 @@
-create database scheduler collate utf8mb4_general_ci;
-use scheduler;
+create database scheduler_db collate utf8mb4_general_ci;
+use scheduler_db;
 
 create table users 
 (
     id int unsigned not null auto_increment,
-    create_add datetime not null,
-    log varchar(20) not null,
+    created_at datetime not null,
+    email varchar(20) not null,
     pass varchar(32) not null,
     name varchar(20) not null,
 
     primary key (id),
-    unique (log, pass)
+    unique (email, pass)
 );
 
 create table projects 
 (
     id int unsigned not null auto_increment,
     name varchar(20) not null,
-    body varchar(20) not null,
-    users_id int unsigned not null,
+    user_id int unsigned not null,
 
     primary key (id)
 );
@@ -26,16 +25,19 @@ create table projects
 create table tasks 
 (
     id int unsigned not null auto_increment,
-    create_add datetime not null,
+    created_at datetime not null,
     name varchar(20) not null,
     body varchar(255) not null,
     data_set varchar(50),
     date_deadline datetime,
     status varchar(20) DEFAULT 'back-log' check (status in ('back-log', 'to-do', 'in-progress', 'done')),
         
-    users_id int unsigned not null,
+    user_id int unsigned not null,
     project_id int unsigned not null,
 
     primary key (id),
     unique (data_set)
 );
+
+create index projects_user_id_idx on projects(user_id);
+create index tasks_project_id_idx on tasks(project_id);
