@@ -10,7 +10,7 @@ create table users
     name varchar(20) not null,
 
     primary key (id),
-    unique (email, pass)
+    unique (email)
 );
 
 create table projects 
