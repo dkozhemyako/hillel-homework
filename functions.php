@@ -156,3 +156,13 @@ function differenceDateH($date, $add_string = "h") {
     
     return $result = ['badge' => $badge, 'calc' => $calc];
 }
+
+function mysqli_assoc($request){
+    require('mysqli_connect.php');
+
+    $sample = mysqli_query($mysqli, $request);
+    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
+
+    mysqli_close($mysqli);
+    return $result;
+}

@@ -5,9 +5,9 @@ create table users
 (
     id int unsigned not null auto_increment,
     created_at datetime not null,
-    email varchar(20) not null,
+    email varchar(30) not null,
     pass varchar(32) not null,
-    name varchar(20) not null,
+    name varchar(30) not null,
 
     primary key (id),
     unique (email)
@@ -28,7 +28,7 @@ create table tasks
     created_at datetime not null,
     name varchar(20) not null,
     body varchar(255) not null,
-    data_set varchar(50),
+    data_set varchar(255),
     date_deadline datetime,
     status varchar(20) DEFAULT 'back-log' check (status in ('back-log', 'to-do', 'in-progress', 'done')),
         
@@ -38,6 +38,5 @@ create table tasks
     primary key (id),
     unique (data_set)
 );
-
 create index projects_user_id_idx on projects(user_id);
 create index tasks_project_id_idx on tasks(project_id);

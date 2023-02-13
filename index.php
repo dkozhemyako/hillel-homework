@@ -1,71 +1,22 @@
 <?php
 require_once('functions.php');
 
-$projects=
+$users = mysqli_assoc(
+  $request = "select * from users"
+);
 
-[
-  'project' => 
-  [
-    [
-      'id' => 1,
-      'name_project' => 'Проект 1',
-      'count_task_in_project' => '9',
-      'active' => true
-    ],
-    [
-      'id' => 2,
-      'name_project' => 'Проект 2',
-      'count_task_in_project' => '5',
-      'active' => false
-    ]
-  ]
-];
-
-$tasks = 
-[
-  'task_backlog' =>
-  [
-    [
-      'id' => 1,
-      'header' => 'Назва задачі 1',
-      'body' => 'Опис задачі 1',
-      'deadline_date' => '04.02.2023'
-    ]
-  ],
-  'task_to_do' =>
-  [
-    [
-    'id' => 2,
-    'header' => 'Назва задачі 2',
-    'body' => 'Опис задачі 2',
-    'deadline_date' => '06-02-2023'
-    ]
-  ],
-  'task_in_progress' =>
-  [
-    [
-    'id' => 3,
-    'header' => 'Назва задачі 3',
-    'body' => 'Опис задачі 3',
-    'deadline_date' => '10.02.2023'
-    ]
-  ],
-  'task_done' =>
-  [
-    [
-    'id' => 4,
-    'header' => 'Назва задачі 4',
-    'body' => 'Опис задачі 4',
-    'deadline_date' => ''
-    ]
-  ]
-];
-
+$projects = mysqli_assoc(
+  $request = "select * from projects where user_id=" . $users['0']['id']
+);
+  
+$tasks = mysqli_assoc(
+  $request = "select * from tasks where project_id=" . $_GET['id']
+);
 
 $left_sidebar = renderTemplate(
   'left_sidebar.php',
   [
-    'name_user_sidebar' => 'Кожемяко Дмитро',
+    'name_user_sidebar' => $users['0']['name'],
     'projects' => $projects
   ]
 );

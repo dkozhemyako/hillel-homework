@@ -24,7 +24,7 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               <?php foreach($projects['project'] as $key => $project):?>
+               <?php foreach($projects as $key => $project):?>
                 <?=renderTemplate('project.php', ['project' => $project])?>
                <?php endforeach;?>
                
