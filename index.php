@@ -1,17 +1,14 @@
 <?php
 require_once('functions.php');
 
-$users = mysqli_assoc(
-  $request = "select * from users"
-);
+$mysqli = my_mysqli_connect();
 
-$projects = mysqli_assoc(
-  $request = "select * from projects where user_id=" . $users['0']['id']
-);
-  
-$tasks = mysqli_assoc(
-  $request = "select * from tasks where project_id=" . $_GET['id']
-);
+$users = sql_select_users($mysqli);
+$user_id = $users['0']['id'];
+
+$project_id = $_GET['id'];
+$tasks = sql_select_tasks($mysqli, $project_id);
+$projects = sql_select_projects_count_tasks($mysqli,  $user_id);
 
 $left_sidebar = renderTemplate(
   'left_sidebar.php',

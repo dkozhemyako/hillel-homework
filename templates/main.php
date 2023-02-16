@@ -38,7 +38,8 @@
           <?php foreach($tasks as $task):?>
           <?php if ($task['status'] === 'back-log') : ?>
           <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; endforeach;?>
+          <?php endif; ?>
+          <?php endforeach; ?>
           
   
             </div>
@@ -54,7 +55,8 @@
           <?php foreach($tasks as $task):?>
           <?php if ($task['status'] === 'to-do') : ?>
           <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; endforeach;?>
+          <?php endif; ?>
+          <?php endforeach; ?>
 
             </div>
           </div>
@@ -69,7 +71,8 @@
           <?php foreach($tasks as $task):?>
           <?php if ($task['status'] === 'in-progress') : ?>
           <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; endforeach;?>
+          <?php endif; ?>
+          <?php endforeach; ?>
 
             </div>
           </div>
@@ -84,7 +87,8 @@
           <?php foreach($tasks as $task):?>
           <?php if ($task['status'] === 'done') : ?>
           <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; endforeach;?>
+          <?php endif; ?>
+          <?php endforeach; ?>
 
             </div>
           </div>

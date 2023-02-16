@@ -157,12 +157,49 @@ function differenceDateH($date, $add_string = "h") {
     return $result = ['badge' => $badge, 'calc' => $calc];
 }
 
-function mysqli_assoc($request){
-    require('mysqli_connect.php');
 
-    $sample = mysqli_query($mysqli, $request);
+function my_mysqli_connect(){
+    mysqli_report(MYSQLI_REPORT_ERROR);
+    $result = mysqli_connect("localhost", "root", "", "scheduler_db");
+    mysqli_set_charset($result, "utf8");
+
+    if ($result === false) {
+        return $result = 'Can`t connect to database';
+    }
+
+    return $result;
+}
+
+function sql_select_users($mysqli){
+    $mysqli = $mysqli;
+    $request = "select * from users";
+
+    $sample = mysqli_query($mysqli, $request); 
     $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
 
-    mysqli_close($mysqli);
+    return $result;
+}
+
+function sql_select_tasks($mysqli, $project_id){
+    $mysqli = $mysqli;
+    $request = "select * from tasks where project_id=" . $project_id;
+
+    $sample = mysqli_query($mysqli, $request); 
+    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
+    
+    return $result;
+}
+
+function sql_select_projects_count_tasks($mysqli, $user_id){
+    $mysqli = $mysqli;
+    $request = "select projects.name, projects.id, count(tasks.id) as count
+    from projects left join tasks
+    on projects.id = tasks.project_id 
+    where projects.user_id=" . $user_id .
+    " GROUP BY projects.id";
+
+    $sample = mysqli_query($mysqli, $request); 
+    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
+    
     return $result;
 }

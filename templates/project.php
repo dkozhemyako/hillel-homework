@@ -3,7 +3,7 @@
         <i class="nav-icon fas fa-columns"></i>
         <p>
         <?=htmlentities($project['name'])?>
-        <span class="badge badge-info right"></span> <!-- count task in project -->
+        <span class="badge badge-info right"><?=$project['count']?></span>
         </p>
     </a>
 </li>
