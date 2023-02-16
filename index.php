@@ -7,8 +7,11 @@ $users = sql_select_users($mysqli);
 $user_id = $users['0']['id'];
 
 $project_id = $_GET['id'];
-$tasks = sql_select_tasks($mysqli, $project_id);
 $projects = sql_select_projects_count_tasks($mysqli,  $user_id);
+
+
+$tasks = sql_select_tasks($mysqli, $project_id);
+
 
 $left_sidebar = renderTemplate(
   'left_sidebar.php',

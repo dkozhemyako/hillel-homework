@@ -164,7 +164,7 @@ function my_mysqli_connect(){
     mysqli_set_charset($result, "utf8");
 
     if ($result === false) {
-        return $result = 'Can`t connect to database';
+       die('Can`t connect to database');
     }
 
     return $result;
@@ -174,7 +174,10 @@ function sql_select_users($mysqli){
     $mysqli = $mysqli;
     $request = "select * from users";
 
-    $sample = mysqli_query($mysqli, $request); 
+    $sample = mysqli_query($mysqli, $request);
+    if ($sample === false){
+        die ('SQL request is not complited');
+    }
     $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
 
     return $result;
@@ -184,9 +187,14 @@ function sql_select_tasks($mysqli, $project_id){
     $mysqli = $mysqli;
     $request = "select * from tasks where project_id=" . $project_id;
 
-    $sample = mysqli_query($mysqli, $request); 
-    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
     
+
+    $sample = mysqli_query($mysqli, $request); 
+    if ($sample === false){
+        die ('SQL request is not complited');
+    }
+    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
+
     return $result;
 }
 
@@ -199,6 +207,9 @@ function sql_select_projects_count_tasks($mysqli, $user_id){
     " GROUP BY projects.id";
 
     $sample = mysqli_query($mysqli, $request); 
+    if ($sample === false){
+        die ('SQL request is not complited');
+    }
     $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
     
     return $result;
