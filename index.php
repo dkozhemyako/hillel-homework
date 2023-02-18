@@ -5,7 +5,7 @@ $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT,
 [
   'options'=>
     [
-      'min_range'=>1
+      'min_range'=> 1
     ]
 ]);
 
@@ -25,14 +25,26 @@ foreach ($projects as $project){
       $check_projects = true;
     }
 }
+}
+
 if ($check_projects === false || $id === false){
   header('HTTP/1.0 404 not found');
   exit;
 }
-}
 
 if ($id != null){
     $tasks = sql_select_tasks($mysqli, $id);
+
+    $key = 0;
+    foreach($projects as $project){
+      $projects[$key] = [
+        'id' => $project['id'],
+        'name' => $project['name'],
+        'count' => $project['count'],
+        'active' => $id
+      ];
+    $key++;
+    }
 } 
 
 $left_sidebar = renderTemplate(
