@@ -113,7 +113,7 @@
       </section>
 
       <section class="content">
-        <form action="index.php">
+        <form action="add.php" method="post" enctype="multipart/form-data">
           <div class="row">
             <div class="col-md-6">
               <div class="card card-primary">
@@ -129,16 +129,19 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="inputName">Назва задачі</label>
-                    <input type="text" id="inputName" class="form-control">
+                    <input type="text" id="inputName" name="inputName" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="inputDescription">Опис задачі</label>
-                    <textarea id="inputDescription" class="form-control" rows="4"></textarea>
+                    <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4"></textarea>
                   </div>
                   <div class="form-group">
                     <label for="selectProject">Оберіть проект</label>
-                    <select class="form-control" id="selectProject">
-                      <option>Вхідні</option>
+                    <select class="form-control" id="selectProject" name="selectProject">
+                    <?php foreach($drop_projects as $project):?>
+                      <option value="<?= $project['id']?>"><?= $project['name']?></option>   
+                    <?php endforeach; ?>
+                      
                     </select>
                   </div>
                 </div>
@@ -160,11 +163,11 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="inputDate">Дата виконання</label>
-                    <input type="date" id="inputDate" class="form-control">
+                    <input type="date" id="inputDate" name="inputDate" class="form-control">
                   </div>
                   <div class="form-group">
                     <label for="inputTaskFile">Прикріпити файл</label>
-                    <input type="file" id="inputTaskFile" class="form-control">
+                    <input type="file" id="inputTaskFile" name="inputTaskFile" class="form-control">
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -175,7 +178,7 @@
           <div class="row">
             <div class="col-12">
               <a href="#" class="btn btn-secondary">Cancel</a>
-              <input type="submit" value="Create new Project" class="btn btn-success">
+              <input type="submit" value="Create new Project" class="btn btn-success" name="btn_task_add">
             </div>
           </div>
         </form>
