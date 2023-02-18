@@ -17,7 +17,7 @@ $projects = sql_select_projects_count_tasks($mysqli,  $user_id);
 
 $tasks = sql_select_tasks($mysqli, $id);
 
-if ($id != null || $id === false){
+if ($id != null ){
 
 $check_projects = false;
 foreach ($projects as $project){
@@ -25,7 +25,7 @@ foreach ($projects as $project){
       $check_projects = true;
     }
 }
-if ($check_projects === false){
+if ($check_projects === false || $id === false){
   header('HTTP/1.0 404 not found');
   exit;
 }
@@ -38,7 +38,7 @@ if ($id != null){
 $left_sidebar = renderTemplate(
   'left_sidebar.php',
   [
-    'name_user_sidebar' => $users['0']['name'],
+    'name_user_sidebar' => 'Дмитро Кожемяко',
     'projects' => $projects
   ]
 );
