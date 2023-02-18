@@ -9,43 +9,37 @@ $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT,
     ]
 ]);
 
+
 $mysqli = my_mysqli_connect();
 
 $user_id = 1;
 
 $projects = sql_select_projects_count_tasks($mysqli,  $user_id);
 
-$tasks = sql_select_tasks($mysqli, $id);
-
-if ($id != null ){
 
 $check_projects = false;
+if ($id !== null && $id !== false){
 foreach ($projects as $project){
     if ($id === $project['id']){
       $check_projects = true;
     }
 }
 }
-
-if ($check_projects === false || $id === false){
+if ($check_projects === false && $id !== null){
   header('HTTP/1.0 404 not found');
   exit;
 }
 
-if ($id != null){
-    $tasks = sql_select_tasks($mysqli, $id);
-
-    $key = 0;
-    foreach($projects as $project){
-      $projects[$key] = [
-        'id' => $project['id'],
-        'name' => $project['name'],
-        'count' => $project['count'],
-        'active' => $id
-      ];
+$key = 0;
+foreach($projects as $project){
+  $projects[$key] = [
+    'id' => $project['id'],
+    'name' => $project['name'],
+    'count' => $project['count'],
+    'active' => $id
+    ];
     $key++;
-    }
-} 
+}
 
 $left_sidebar = renderTemplate(
   'left_sidebar.php',
@@ -55,16 +49,17 @@ $left_sidebar = renderTemplate(
   ]
 );
 
-if ($id != null && $id != false){
+
+$main = '<div class="main-footer">Виберіть або створіть проект</div>';
+if ($id !== null && $id !== false){
+  $tasks = sql_select_tasks($mysqli, $id);
   $main = rendertemplate(
     'main.php',
     [ 
       'tasks' => $tasks
     ]
   );
-} else if ($id === null){
-  $main = '<div class="main-footer">Виберіть або створіть проект</div>';
-}
+} 
 
 $layout = renderTemplate(
   'layout.php',
