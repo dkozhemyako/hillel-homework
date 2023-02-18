@@ -1,17 +1,39 @@
 <?php
 require_once('functions.php');
 
+$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT, 
+[
+  'options'=>
+    [
+      'min_range'=>1
+    ]
+]);
+
 $mysqli = my_mysqli_connect();
 
-$users = sql_select_users($mysqli);
-$user_id = $users['0']['id'];
+$user_id = 1;
 
-$project_id = $_GET['id'];
 $projects = sql_select_projects_count_tasks($mysqli,  $user_id);
 
+$tasks = sql_select_tasks($mysqli, $id);
 
-$tasks = sql_select_tasks($mysqli, $project_id);
+if ($id != null || $id === false){
 
+$check_projects = false;
+foreach ($projects as $project){
+    if ($id === $project['id']){
+      $check_projects = true;
+    }
+}
+if ($check_projects === false){
+  header('HTTP/1.0 404 not found');
+  exit;
+}
+}
+
+if ($id != null){
+    $tasks = sql_select_tasks($mysqli, $id);
+} 
 
 $left_sidebar = renderTemplate(
   'left_sidebar.php',
@@ -21,12 +43,16 @@ $left_sidebar = renderTemplate(
   ]
 );
 
-$main = rendertemplate(
-  'main.php',
-  [ 
-    'tasks' => $tasks
-  ]
-);
+if ($id != null && $id != false){
+  $main = rendertemplate(
+    'main.php',
+    [ 
+      'tasks' => $tasks
+    ]
+  );
+} else if ($id === null){
+  $main = '<div class="main-footer">Виберіть або створіть проект</div>';
+}
 
 $layout = renderTemplate(
   'layout.php',
@@ -38,4 +64,7 @@ $layout = renderTemplate(
 );
 
 print $layout;
+
+
+
 

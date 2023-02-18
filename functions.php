@@ -170,47 +170,42 @@ function my_mysqli_connect(){
     return $result;
 }
 
-function sql_select_users($mysqli){
-    $mysqli = $mysqli;
-    $request = "select * from users";
-
-    $sample = mysqli_query($mysqli, $request);
-    if ($sample === false){
-        die ('SQL request is not complited');
-    }
-    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
-
-    return $result;
-}
 
 function sql_select_tasks($mysqli, $project_id){
-    $mysqli = $mysqli;
-    $request = "select * from tasks where project_id=" . $project_id;
 
-    
+    $request = "select * from tasks where project_id= ?";
 
-    $sample = mysqli_query($mysqli, $request); 
-    if ($sample === false){
+    $stmt = mysqli_prepare($mysqli, $request);
+    mysqli_stmt_bind_param($stmt, 'i', $project_id);
+    $check_sql = mysqli_stmt_execute($stmt);
+
+    if ($check_sql === false){
         die ('SQL request is not complited');
     }
-    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
-
+    
+    $stmt_res = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
     return $result;
 }
 
 function sql_select_projects_count_tasks($mysqli, $user_id){
-    $mysqli = $mysqli;
-    $request = "select projects.name, projects.id, count(tasks.id) as count
-    from projects left join tasks
-    on projects.id = tasks.project_id 
-    where projects.user_id=" . $user_id .
-    " GROUP BY projects.id";
 
-    $sample = mysqli_query($mysqli, $request); 
-    if ($sample === false){
+    $request = "select projects.name, projects.id, count(tasks.id) as count 
+    from projects left join tasks 
+    on projects.id = tasks.project_id 
+    where projects.user_id= ? 
+    GROUP BY projects.id";
+    
+    $stmt = mysqli_prepare($mysqli, $request);
+    mysqli_stmt_bind_param($stmt, 'i', $user_id);
+    $check_sql = mysqli_stmt_execute($stmt);
+
+    if ($check_sql === false){
         die ('SQL request is not complited');
     }
-    $result = mysqli_fetch_all($sample, MYSQLI_ASSOC);
+
+    $stmt_res = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
     
     return $result;
 }
