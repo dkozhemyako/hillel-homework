@@ -1,81 +1,58 @@
 <?php
 require_once('functions.php');
 
-$projects=
-
+$id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT, 
 [
-  'project' => 
-  [
+  'options'=>
     [
-      'id' => 1,
-      'name_project' => 'Проект 1',
-      'count_task_in_project' => '9',
-      'active' => true
-    ],
-    [
-      'id' => 2,
-      'name_project' => 'Проект 2',
-      'count_task_in_project' => '5',
-      'active' => false
+      'min_range'=>1
     ]
-  ]
-];
+]);
 
-$tasks = 
-[
-  'task_backlog' =>
-  [
-    [
-      'id' => 1,
-      'header' => 'Назва задачі 1',
-      'body' => 'Опис задачі 1',
-      'deadline_date' => '04.02.2023'
-    ]
-  ],
-  'task_to_do' =>
-  [
-    [
-    'id' => 2,
-    'header' => 'Назва задачі 2',
-    'body' => 'Опис задачі 2',
-    'deadline_date' => '06-02-2023'
-    ]
-  ],
-  'task_in_progress' =>
-  [
-    [
-    'id' => 3,
-    'header' => 'Назва задачі 3',
-    'body' => 'Опис задачі 3',
-    'deadline_date' => '10.02.2023'
-    ]
-  ],
-  'task_done' =>
-  [
-    [
-    'id' => 4,
-    'header' => 'Назва задачі 4',
-    'body' => 'Опис задачі 4',
-    'deadline_date' => ''
-    ]
-  ]
-];
+$mysqli = my_mysqli_connect();
 
+$user_id = 1;
+
+$projects = sql_select_projects_count_tasks($mysqli,  $user_id);
+
+$tasks = sql_select_tasks($mysqli, $id);
+
+if ($id != null ){
+
+$check_projects = false;
+foreach ($projects as $project){
+    if ($id === $project['id']){
+      $check_projects = true;
+    }
+}
+if ($check_projects === false || $id === false){
+  header('HTTP/1.0 404 not found');
+  exit;
+}
+}
+
+if ($id != null){
+    $tasks = sql_select_tasks($mysqli, $id);
+} 
 
 $left_sidebar = renderTemplate(
   'left_sidebar.php',
   [
-    'name_user_sidebar' => 'Кожемяко Дмитро',
+    'name_user_sidebar' => 'Дмитро Кожемяко',
     'projects' => $projects
   ]
 );
 
-$main = rendertemplate(
-  'main.php',
-  [ 
-    'tasks' => $tasks
-  ]
-);
+if ($id != null && $id != false){
+  $main = rendertemplate(
+    'main.php',
+    [ 
+      'tasks' => $tasks
+    ]
+  );
+} else if ($id === null){
+  $main = '<div class="main-footer">Виберіть або створіть проект</div>';
+}
 
 $layout = renderTemplate(
   'layout.php',
@@ -87,4 +64,7 @@ $layout = renderTemplate(
 );
 
 print $layout;
+
+
+
 

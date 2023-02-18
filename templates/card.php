@@ -1,6 +1,6 @@
             <div class="card card-info card-outline" data-task-id=<?=$task['id']?>>
                 <div class="card-header">
-                  <h5 class="card-title"><?=htmlentities($task['header'])?></h5>
+                  <h5 class="card-title"><?=htmlentities($task['name'])?></h5>
                   <div class="card-tools">
                     <a href="#" class="btn btn-tool btn-link">#3</a>
                     <a href="#" class="btn btn-tool">
@@ -13,11 +13,11 @@
                     <?=htmlentities($task['body'])?>
                   </p>
 
-                  <?php if (!empty($task['deadline_date'])) : ?>
+                  <?php if (!empty($task['date_deadline'])) : ?>
 
-                  <small class="badge badge-<?=differenceDateH($task['deadline_date'])['badge']?>">
+                  <small class="badge badge-<?=differenceDateH($task['date_deadline'])['badge']?>">
                     <i class="far fa-clock"></i>
-                    <?=differenceDateH($task['deadline_date'])['calc']?>
+                    <?=differenceDateH($task['date_deadline'])['calc']?>
                   </small>
 
                   <?php endif; ?>
