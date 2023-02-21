@@ -209,3 +209,45 @@ function sql_select_projects_count_tasks($mysqli, $user_id){
     
     return $result;
 }
+
+function checkProjects($id, $projects = [])
+{
+    if ($id !== null && $id !== false)
+    {
+        foreach ($projects as $project)
+        {
+            if ($id === $project['id'])
+            {
+              return true;
+            }
+        }
+    }
+        return false;
+}
+
+function tasksAdd($mysqli,$created_at, $name, $body, $data_set, $date_deadline, $user_id, $project_id)
+{
+    $request = "insert into tasks
+    (created_at, name, body, data_set, date_deadline, user_id, project_id)
+    values (?, ?, ?, ?, ?, ?, ?)";
+      
+    $stmt = mysqli_prepare($mysqli, $request);
+  
+    mysqli_stmt_bind_param($stmt, 'sssssii',
+      $created_at, 
+      $name, 
+      $body, 
+      $data_set, 
+      $date_deadline, 
+      $user_id, 
+      $project_id
+    );
+
+    $check_sql = mysqli_stmt_execute($stmt);
+      
+    if ($check_sql === true)
+    {
+        return true;
+    }
+    return false;  
+}

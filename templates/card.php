@@ -2,9 +2,10 @@
                 <div class="card-header">
                   <h5 class="card-title"><?=htmlentities($task['name'])?></h5>
                   <div class="card-tools">
-                    <a href="#" class="btn btn-tool btn-link">#3</a>
+                    <a href="<?=$task['data_set']?>" class="btn btn-tool btn-link">file</a>
                     <a href="#" class="btn btn-tool">
-                      <i class="fas fa-pen"></i>
+                      <i class="fas fa-pen">
+                      </i>
                     </a>
                   </div>
                 </div>

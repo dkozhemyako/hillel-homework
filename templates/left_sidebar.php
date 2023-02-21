@@ -25,7 +25,14 @@
                with font-awesome or any other icon font library -->
 
                <?php foreach($projects as $key => $project):?>
-                <?=renderTemplate('project.php', ['project' => $project])?>
+                <?=renderTemplate('project.php', 
+                [
+                  'project' => $project,
+                  'activProject' => $activProject
+                ])?>
+
+              
+                
                <?php endforeach;?>
                
               <li class="nav-item">

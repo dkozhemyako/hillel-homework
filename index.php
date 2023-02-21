@@ -9,46 +9,26 @@ $id = filter_input(INPUT_GET, "id", FILTER_VALIDATE_INT,
     ]
 ]);
 
-
 $mysqli = my_mysqli_connect();
 
 $user_id = 1;
 
 $projects = sql_select_projects_count_tasks($mysqli,  $user_id);
 
-
-$check_projects = false;
-if ($id != null && $id != false){
-foreach ($projects as $project){
-    if ($id === $project['id']){
-      $check_projects = true;
-    }
-}
-}
-if ($check_projects === false && $id != null){
+if (checkProjects($id, $projects) === false && $id !== null){
   header('HTTP/1.0 404 not found');
   exit;
 }
 
 $tasks = sql_select_tasks($mysqli, $id);
 
-$key = 0;
-foreach($projects as $project){
-  $projects[$key] = [
-    'id' => $project['id'],
-    'name' => $project['name'],
-    'count' => $project['count'],
-    'active' => $id
-    ];
-    $key++;
-}
-
 $left_sidebar = renderTemplate(
   'left_sidebar.php',
   [
     'name_user_sidebar' => 'Дмитро Кожемяко',
-    'projects' => $projects
-  ]
+    'projects' => $projects,
+    'activProject' => $id
+    ]
 );
 
 $main = '<div class="main-footer">Виберіть або створіть проект</div>';

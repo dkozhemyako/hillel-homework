@@ -111,7 +111,7 @@
           </div>
         </div>
       </section>
-
+      
       <section class="content">
         <form action="add.php" method="post" enctype="multipart/form-data">
           <div class="row">
@@ -129,20 +129,28 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="inputName">Назва задачі</label>
-                    <input type="text" id="inputName" name="inputName" class="form-control">
+                    <input type="text" id="inputName" name="inputName" class="form-control <?= !empty($input_errors['inputName']) ? ' is-invalid' : ''?>">
+                    <?= !empty($input_errors['inputName']) ? 
+                    '<span id="inputNameEr" class="error invalid-feedback">'.$input_errors['inputName'].'</span>'
+                    : ''?>
                   </div>
                   <div class="form-group">
                     <label for="inputDescription">Опис задачі</label>
-                    <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4"></textarea>
+                    <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4" ></textarea>
                   </div>
                   <div class="form-group">
                     <label for="selectProject">Оберіть проект</label>
-                    <select class="form-control" id="selectProject" name="selectProject">
+                    <select class="form-control <?= !empty($input_errors['selectProject']) ? ' is-invalid' : ''?>" id="selectProject" name="selectProject">
+                    <option></option>
+
                     <?php foreach($drop_projects as $project):?>
                       <option value="<?= $project['id']?>"><?= $project['name']?></option>   
                     <?php endforeach; ?>
-                      
+
                     </select>
+                    <?= !empty($input_errors['selectProject']) ? 
+                    '<span id="selectProjectEr" class="error invalid-feedback">'.$input_errors['selectProject'].'</span>'
+                    : ''?>
                   </div>
                 </div>
                 <!-- /.card-body -->
@@ -163,7 +171,10 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="inputDate">Дата виконання</label>
-                    <input type="date" id="inputDate" name="inputDate" class="form-control">
+                    <input type="date" id="inputDate" name="inputDate" class="form-control <?= !empty($input_errors['inputDate']) ? ' is-invalid' : ''?>">
+                    <?= !empty($input_errors['inputDate']) ? 
+                    '<span id="inputDateEr" class="error invalid-feedback">'.$input_errors['inputDate'].'</span>'
+                    : ''?>
                   </div>
                   <div class="form-group">
                     <label for="inputTaskFile">Прикріпити файл</label>
