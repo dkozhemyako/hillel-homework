@@ -35,7 +35,7 @@
                     <label for="inputName">Назва задачі</label>
                     <input type="text" id="inputName" name="inputName" class="form-control <?= !empty($input_errors['inputName']) ? ' is-invalid' : ''?>" value="<?=htmlspecialchars($myinputs['inputName'])?>">
                     <?= !empty($input_errors['inputName']) ? 
-                    '<span id="inputNameEr" class="error invalid-feedback">'.$input_errors['inputName'].'</span>'
+                    '<span id="inputNameEr" class="error invalid-feedback">'.htmlspecialchars($input_errors['inputName']).'</span>'
                     : ''?>
                   </div>
                   <div class="form-group">
@@ -49,12 +49,12 @@
                     
                     <?php foreach($drop_projects as $project):?>
                     
-                      <option value="<?= $project['id']?>" <?=$project['id'] == $myinputs['selectProject'] ? ' selected' : '' ?>><?= $project['name']?></option>   
+                      <option value="<?= htmlspecialchars($project['id'])?>" <?=$project['id'] == $myinputs['selectProject'] ? ' selected' : '' ?>><?= htmlspecialchars($project['name'])?></option>   
                     <?php endforeach; ?>
 
                     </select>
                     <?= !empty($input_errors['selectProject']) ? 
-                    '<span id="selectProjectEr" class="error invalid-feedback">'.$input_errors['selectProject'].'</span>'
+                    '<span id="selectProjectEr" class="error invalid-feedback">'.htmlspecialchars($input_errors['selectProject']).'</span>'
                     : ''?>
                   </div>
                 </div>
@@ -78,7 +78,7 @@
                     <label for="inputDate">Дата виконання</label>
                     <input type="date" id="inputDate" name="inputDate" class="form-control  <?= !empty($input_errors['inputDate']) ? ' is-invalid' : ''?> " value ="<?=htmlspecialchars($myinputs['inputDate'])?>">
                     <?= !empty($input_errors['inputDate']) ? 
-                    '<span id="inputDateEr" class="error invalid-feedback">'.$input_errors['inputDate'].'</span>'
+                    '<span id="inputDateEr" class="error invalid-feedback">'.htmlspecialchars($input_errors['inputDate']).'</span>'
                     : ''?>
                   </div>
                   <div class="form-group">
