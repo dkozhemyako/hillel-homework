@@ -43,6 +43,14 @@
                 </p>
               </a>
             </li>
+            <li class="nav-item">
+              <a href="add.php" class="nav-link">
+                <i class="nav-icon fas fa-plus"></i>
+                <p>
+                  Додати завдання
+                </p>
+              </a>
+            </li>
           </ul>
         </nav>
         <!-- /.sidebar-menu -->

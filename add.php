@@ -10,33 +10,30 @@ $task_drop_projects = sql_select_projects_count_tasks($mysqli, $user_id);
 if (isset($_POST['btn_task_add']))
 {
   $args = array(
-    'inputName'   => FILTER_SANITIZE_STRING,
-    'inputDescription' => FILTER_SANITIZE_STRING,
+    'inputName'   => FILTER_UNSAFE_RAW,
+    'inputDescription' => FILTER_UNSAFE_RAW,
     'selectProject' => FILTER_VALIDATE_INT,
-    'inputDate' => FILTER_SANITIZE_STRING,
+    'inputDate' => FILTER_UNSAFE_RAW,
   );
 
   $myinputs = filter_input_array(INPUT_POST, $args);
-
-  $projects = sql_select_projects_count_tasks($mysqli,  $user_id);
 
   $input_errors = [];
 
   if (isDateValid($myinputs['inputDate']) === false || differenceDateH($myinputs['inputDate'], '')['calc'] == 0)
   {
-    $input_errors += ['inputDate' => 'Вкажіть коректну дату'];
+    $input_errors['inputDate'] = 'Вкажіть коректну дату';
   }
 
-  if (checkProjects($myinputs['selectProject'], $projects) === false)
+  if (checkProjects($myinputs['selectProject'], $task_drop_projects) === false)
   {
-    $input_errors += ['selectProject' => 'Вкажіть існуючий проект'];
+    $input_errors['selectProject'] = 'Вкажіть існуючий проект';
   }
 
   if ($myinputs['inputName'] === '')
   {
-    $input_errors += ['inputName' => 'Вкажіть назву задачі'];
+    $input_errors['inputName'] ='Вкажіть назву задачі';
   }
-
 
   if (empty($input_errors))
   {
@@ -59,16 +56,33 @@ if (isset($_POST['btn_task_add']))
   
     if ($taskAdd === true)
       {
-        header("Location: http://localhost/hillel-homework/index.php");
+        header("Location: index.php");
       }
   }
 }
 
-print renderTemplate(
+$left_sidebar = renderTemplate(
+  'left_sidebar.php',
+  [ 'name_user_sidebar' => 'Дмитро Кожемяко',
+    'projects' => $task_drop_projects,
+  ]
+);
+
+$task_add = renderTemplate(
   'task-add.php',
   [
       'drop_projects' => $task_drop_projects,
       'input_errors' => $input_errors,
+      'myinputs' => $myinputs,
+  ]
+);
+
+print renderTemplate(
+  'layout.php',
+  [
+    'name_page_title' => 'Завдання та проекти | Дошка', 
+    'tasks_content' => $task_add,
+    'main_sidebar' => $left_sidebar,
   ]
 );
 

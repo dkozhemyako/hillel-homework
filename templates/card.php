@@ -2,10 +2,9 @@
                 <div class="card-header">
                   <h5 class="card-title"><?=htmlentities($task['name'])?></h5>
                   <div class="card-tools">
-                    <a href="<?=$task['data_set']?>" class="btn btn-tool btn-link">file</a>
+                    <a href="#" class="btn btn-tool btn-link">#<?=$task['id']?></a>
                     <a href="#" class="btn btn-tool">
-                      <i class="fas fa-pen">
-                      </i>
+                      <i class="fas fa-pen"></i>
                     </a>
                   </div>
                 </div>
@@ -13,7 +12,9 @@
                   <p>
                     <?=htmlentities($task['body'])?>
                   </p>
-
+                  <a href="<?=$task['data_set']?>" class="btn btn-tool">
+                    <i class="fas fa-file"></i>
+                  </a>
                   <?php if (!empty($task['date_deadline'])) : ?>
 
                   <small class="badge badge-<?=differenceDateH($task['date_deadline'])['badge']?>">

@@ -41,7 +41,7 @@ if ($id != null && $id != false){
   );
 } 
 
-$layout = renderTemplate(
+print renderTemplate(
   'layout.php',
   [
     'name_page_title' => 'Завдання та проекти | Дошка', 
@@ -49,9 +49,4 @@ $layout = renderTemplate(
     'main_sidebar' => $left_sidebar
   ]
 );
-
-print $layout;
-
-
-
 
