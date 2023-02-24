@@ -16,10 +16,9 @@
                     <i class="fas fa-file"></i>
                   </a>
                   <?php if (!empty($task['date_deadline'])) : ?>
-
                   <small class="badge badge-<?=htmlspecialchars(differenceDateH($task['date_deadline'])['badge'])?>">
                     <i class="far fa-clock"></i>
-                    <?=htmlspecialchars(differenceDateH($task['date_deadline'])['calc'])?>
+                        <?=htmlspecialchars(differenceDateH($task['date_deadline'])['calc'])?>
                   </small>
 
                   <?php endif; ?>

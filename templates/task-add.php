@@ -1,4 +1,3 @@
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
       <section class="content-header">
@@ -33,28 +32,36 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="inputName">Назва задачі</label>
-                    <input type="text" id="inputName" name="inputName" class="form-control <?= !empty($input_errors['inputName']) ? ' is-invalid' : ''?>" value="<?=htmlspecialchars($myinputs['inputName'])?>">
-                    <?= !empty($input_errors['inputName']) ? 
-                    '<span id="inputNameEr" class="error invalid-feedback">'.htmlspecialchars($input_errors['inputName']).'</span>'
+                    <input type="text" id="inputName" name="inputName" class="form-control 
+                    <?= !empty($input_errors['inputName']) ? ' is-invalid' : ''?>" 
+                    value="<?=htmlspecialchars($myinputs['inputName'])?>">
+                    <?= !empty($input_errors['inputName']) ?
+                    '<span id="inputNameEr" class="error invalid-feedback">' .
+                    htmlspecialchars($input_errors['inputName']) . '</span>'
                     : ''?>
                   </div>
                   <div class="form-group">
                     <label for="inputDescription">Опис задачі</label>
-                    <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4" ><?=htmlspecialchars($myinputs['inputDescription'])?></textarea>
+                    <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4" >
+                      <?=htmlspecialchars($myinputs['inputDescription'])?></textarea>
                   </div>
                   <div class="form-group">
                     <label for="selectProject">Оберіть проект</label>
-                    <select class="form-control <?= !empty($input_errors['selectProject']) ? ' is-invalid' : ''?>" id="selectProject" name="selectProject">
+                    <select class="form-control 
+                    <?= !empty($input_errors['selectProject']) ? ' is-invalid' : ''?>"
+                    id="selectProject" name="selectProject">
                     <option></option>
                     
-                    <?php foreach($drop_projects as $project):?>
-                    
-                      <option value="<?= htmlspecialchars($project['id'])?>" <?=$project['id'] == $myinputs['selectProject'] ? ' selected' : '' ?>><?= htmlspecialchars($project['name'])?></option>   
+                    <?php foreach ($drop_projects as $project) : ?>
+                      <option value="<?= htmlspecialchars($project['id'])?>" 
+                         <?=$project['id'] == $myinputs['selectProject'] ? ' selected' : '' ?>>
+                         <?= htmlspecialchars($project['name'])?></option>   
                     <?php endforeach; ?>
 
                     </select>
-                    <?= !empty($input_errors['selectProject']) ? 
-                    '<span id="selectProjectEr" class="error invalid-feedback">'.htmlspecialchars($input_errors['selectProject']).'</span>'
+                    <?= !empty($input_errors['selectProject']) ?
+                    '<span id="selectProjectEr" class="error invalid-feedback">' .
+                    htmlspecialchars($input_errors['selectProject']) . '</span>'
                     : ''?>
                   </div>
                 </div>
@@ -76,9 +83,15 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="inputDate">Дата виконання</label>
-                    <input type="date" id="inputDate" name="inputDate" class="form-control  <?= !empty($input_errors['inputDate']) ? ' is-invalid' : ''?> " value ="<?=htmlspecialchars($myinputs['inputDate'])?>">
-                    <?= !empty($input_errors['inputDate']) ? 
-                    '<span id="inputDateEr" class="error invalid-feedback">'.htmlspecialchars($input_errors['inputDate']).'</span>'
+                    <input type="date" id="inputDate" name="inputDate" class="form-control  
+
+                    <?= !empty($input_errors['inputDate']) ? ' is-invalid' : '' ?>" 
+                
+                    value ="<?=htmlspecialchars($myinputs['inputDate'])?>">
+
+                    <?= !empty($input_errors['inputDate']) ?
+                    '<span id="inputDateEr" class="error invalid-feedback">' .
+                    htmlspecialchars($input_errors['inputDate']) . '</span>'
                     : ''?>
                   </div>
                   <div class="form-group">
@@ -101,4 +114,3 @@
       </section>
     </div>
 
-    

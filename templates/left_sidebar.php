@@ -24,16 +24,15 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               <?php foreach($projects as $key => $project):?>
-                <?=renderTemplate('project.php', 
-                [
-                  'project' => $project,
-                  'activProject' => $activProject
-                ])?>
-
-              
-                
-               <?php endforeach;?>
+              <?php foreach ($projects as $key => $project) : ?>
+                  <?=renderTemplate(
+                      'project.php',
+                      [
+                      'project' => $project,
+                      'activProject' => $activProject
+                      ]
+                  )?>
+              <?php endforeach; ?>
                
               <li class="nav-item">
               <a href="index.php" class="nav-link">
