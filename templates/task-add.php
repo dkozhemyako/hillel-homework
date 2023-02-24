@@ -42,8 +42,8 @@
                   </div>
                   <div class="form-group">
                     <label for="inputDescription">Опис задачі</label>
-                    <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4" >
-                      <?=htmlspecialchars($myinputs['inputDescription'])?></textarea>
+                    <textarea id="inputDescription" name="inputDescription" class="form-control" rows="4">
+                    <?=htmlspecialchars($myinputs['inputDescription'])?></textarea>
                   </div>
                   <div class="form-group">
                     <label for="selectProject">Оберіть проект</label>

@@ -65,7 +65,7 @@ $left_sidebar = renderTemplate(
     [
     'name_user_sidebar' => 'Дмитро Кожемяко',
     'projects' => $projects,
-    'activProject' => $id
+    'activProject' => '',
     ]
 );
 
