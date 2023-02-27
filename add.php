@@ -26,7 +26,10 @@ if (isset($_POST['btn_task_add'])) {
 
     $myinputs = filter_input_array(INPUT_POST, $args);
 
-    if (isDateValid($myinputs['inputDate']) === false || differenceDateH($myinputs['inputDate'], '')['calc'] == 0) {
+    if (
+        isDateValid($myinputs['inputDate']) === false && $myinputs['inputDate'] !== '' ||
+        differenceDateH($myinputs['inputDate'], '')['calc'] == 0 && $myinputs['inputDate'] !== ''
+    ) {
         $input_errors['inputDate'] = 'Вкажіть коректну дату';
     }
 
@@ -38,8 +41,17 @@ if (isset($_POST['btn_task_add'])) {
         $input_errors['inputName'] = 'Вкажіть назву задачі';
     }
 
+    if (strlen($myinputs['inputName']) > 50) {
+        $input_errors['inputName'] = 'Назва задачі не повинна бути довше ніж 50 символів';
+    }
+
+    if (strlen($myinputs['inputDescription']) > 200) {
+        $input_errors['inputDescription'] = 'Опис задачі не повинен бути довше ніж 200 символів';
+    }
+
     if (empty($input_errors)) {
         $uploadfile = '';
+        $myinputs['inputDate'] = null;
         if (isset($_FILES['inputTaskFile'])) {
             move_uploaded_file($_FILES['inputTaskFile']['tmp_name'], $_FILES['inputTaskFile']['name']);
             $uploadfile = $_FILES['inputTaskFile']['name'];

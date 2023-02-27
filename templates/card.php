@@ -12,9 +12,13 @@
                   <p>
                     <?=htmlspecialchars($task['body'])?>
                   </p>
-                  <a href="<?=htmlspecialchars($task['data_set'])?>" class="btn btn-tool">
+                  <?= !empty($task['data_set']) ?
+                  '<a href="' .
+                  htmlspecialchars($task['data_set']) .
+                  '" class="btn btn-tool">
                     <i class="fas fa-file"></i>
-                  </a>
+                  </a>'
+                  : '' ?>
                   <?php if (!empty($task['date_deadline'])) : ?>
                   <small class="badge badge-<?=htmlspecialchars(differenceDateH($task['date_deadline'])['badge'])?>">
                     <i class="far fa-clock"></i>
