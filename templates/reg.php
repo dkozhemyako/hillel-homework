@@ -26,59 +26,94 @@
       <div class="card-body">
         <p class="login-box-msg">Зареєструватися</p>
 
-        <form action="../../index.html" method="post">
+        <form action="register.php" method="post">
           <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Повне ім'я">
+            <input name="reg_name" type="text" placeholder="Повне ім'я" class="form-control
+            <?= !empty($input_errors['reg_name']) ? ' is-invalid' : ''?>" 
+            value="<?=htmlspecialchars($myinputs['reg_name'])?>">
+
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
+            <?= !empty($input_errors['reg_name']) ?
+                  '<span id="reg_name_Er" class="error invalid-feedback">' .
+                  htmlspecialchars($input_errors['reg_name']) . '</span>'
+                  : ''
+              ?>
           </div>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email">
+            <input name="reg_email" type="email" placeholder="Email" class="form-control
+            <?= !empty($input_errors['reg_email']) ? ' is-invalid' : ''?>"
+            value="<?=htmlspecialchars($myinputs['reg_email'])?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-envelope"></span>
               </div>
             </div>
+            <?= !empty($input_errors['reg_email']) ?
+                  '<span id="reg_email_Er" class="error invalid-feedback">' .
+                  htmlspecialchars($input_errors['reg_email']) . '</span>'
+                  : ''
+              ?>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Пароль">
+            <input name="reg_password" type="password" placeholder="Пароль" class="form-control
+            <?= !empty($input_errors['reg_password']) ? ' is-invalid' : ''?>"
+            value="<?=htmlspecialchars($myinputs['reg_password'])?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
+            <?= !empty($input_errors['reg_password']) ?
+                  '<span id="reg_password_Er" class="error invalid-feedback">' .
+                  htmlspecialchars($input_errors['reg_password']) . '</span>'
+                  : ''
+              ?>
           </div>
           <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="Повторіть пароль">
+            <input name="reg_password_check" type="password" placeholder="Повторіть пароль" class="form-control
+            <?= !empty($input_errors['reg_password_check']) ? ' is-invalid' : ''?>"
+            value="<?=htmlspecialchars($myinputs['reg_password_check'])?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
+            <?= !empty($input_errors['reg_password_check']) ?
+                  '<span id="reg_password_check_Er" class="error invalid-feedback">' .
+                  htmlspecialchars($input_errors['reg_password_check']) . '</span>'
+                  : ''
+              ?>
           </div>
           <div class="row">
             <div class="col-12">
               <div class="icheck-primary">
-                <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+                <input name="reg_agreTerms" type="checkbox" id="agreeTerms" name="terms" value="agree">
                 <label for="agreeTerms">
-                  Я згоден(а) з <a href="#">умовами</a>
+                <?= !empty($input_errors['reg_agreTerms']) ? htmlspecialchars($input_errors['reg_agreTerms']) : 'Я згоден(а) з'?>
+                  <a href="#">умовами</a>
                 </label>
+
               </div>
             </div>
             <!-- /.col -->
           </div>
+          
           <div class="row">
             <div class="col-8 offset-2">
-              <button type="submit" class="btn btn-primary btn-block">Зареєструватися</button>
+              <div style="color: grey; text-align: center; "> 
+                <?= !empty($input_errors['error']) ? htmlspecialchars($input_errors['error']) : ''?>
+              </div>
+                <button name="reg_btn" type="submit" class="btn btn-primary btn-block">Зареєструватися</button>
             </div>
             <!-- /.col -->
           </div>
         </form>
 
-        <a href="login.html" class="text-center">В мене вже є аккаунт</a>
+        <a href="login.php" class="text-center">В мене вже є аккаунт</a>
       </div>
       <!-- /.form-box -->
     </div><!-- /.card -->

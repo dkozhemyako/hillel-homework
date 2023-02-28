@@ -173,6 +173,12 @@ function my_mysqli_connect()
     return $result;
 }
 
+function sql_select_users($mysqli)
+{
+    $result = mysqli_query($mysqli, 'select * from users');
+    return mysqli_fetch_assoc($result);
+}
+
 
 function sql_select_tasks($mysqli, $project_id)
 {
@@ -222,6 +228,18 @@ function checkProjects($id, $projects = [])
         return false;
 }
 
+function checkUsers($email, $users)
+{
+    if ($email !== null && $email !== false) {
+        foreach ($users as $user) {
+            if ($email === $user['email']) {
+                return true;
+            }
+        }
+    }
+        return false;
+}
+
 function tasksAdd($mysqli, $created_at, $name, $body, $data_set, $date_deadline, $user_id, $project_id)
 {
     $request = "insert into tasks
@@ -238,6 +256,29 @@ function tasksAdd($mysqli, $created_at, $name, $body, $data_set, $date_deadline,
         $date_deadline,
         $user_id,
         $project_id
+    );
+
+    $check_sql = mysqli_stmt_execute($stmt);
+
+    if ($check_sql === true) {
+        return true;
+    }
+    return false;
+}
+
+function usersAdd($mysqli, $created_at, $email, $pass, $name)
+{
+    $request = "insert into users
+    (created_at, email, pass, name)
+    values (?, ?, ?, ?)";
+    $stmt = mysqli_prepare($mysqli, $request);
+    mysqli_stmt_bind_param(
+        $stmt,
+        'ssss',
+        $created_at,
+        $email,
+        $pass,
+        $name,
     );
 
     $check_sql = mysqli_stmt_execute($stmt);

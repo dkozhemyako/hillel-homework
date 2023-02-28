@@ -6,7 +6,7 @@ create table users
     id int unsigned not null auto_increment,
     created_at datetime not null,
     email varchar(30) not null,
-    pass varchar(32) not null,
+    pass varchar(255) not null,
     name varchar(30) not null,
 
     primary key (id),
@@ -26,7 +26,7 @@ create table tasks
 (
     id int unsigned not null auto_increment,
     created_at datetime not null,
-    name varchar(20) not null,
+    name varchar(50) not null,
     body varchar(255) not null,
     data_set varchar(255),
     date_deadline datetime,
