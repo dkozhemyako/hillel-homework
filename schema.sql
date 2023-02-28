@@ -35,8 +35,8 @@ create table tasks
     user_id int unsigned not null,
     project_id int unsigned not null,
 
-    primary key (id),
-    unique (data_set)
+    primary key (id)
+
 );
 create index projects_user_id_idx on projects(user_id);
 create index tasks_project_id_idx on tasks(project_id);

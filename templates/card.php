@@ -1,8 +1,8 @@
-            <div class="card card-info card-outline" data-task-id=<?=$task['id']?>>
+            <div class="card card-info card-outline" data-task-id=<?=htmlspecialchars($task['id'])?>>
                 <div class="card-header">
-                  <h5 class="card-title"><?=htmlentities($task['name'])?></h5>
+                  <h5 class="card-title"><?=htmlspecialchars($task['name'])?></h5>
                   <div class="card-tools">
-                    <a href="#" class="btn btn-tool btn-link">#3</a>
+                    <a href="#" class="btn btn-tool btn-link">#<?=htmlspecialchars($task['id'])?></a>
                     <a href="#" class="btn btn-tool">
                       <i class="fas fa-pen"></i>
                     </a>
@@ -10,14 +10,19 @@
                 </div>
                 <div class="card-body">
                   <p>
-                    <?=htmlentities($task['body'])?>
+                    <?=htmlspecialchars($task['body'])?>
                   </p>
-
+                  <?= !empty($task['data_set']) ?
+                  '<a href="' .
+                  htmlspecialchars($task['data_set']) .
+                  '" class="btn btn-tool">
+                    <i class="fas fa-file"></i>
+                  </a>'
+                  : '' ?>
                   <?php if (!empty($task['date_deadline'])) : ?>
-
-                  <small class="badge badge-<?=differenceDateH($task['date_deadline'])['badge']?>">
+                  <small class="badge badge-<?=htmlspecialchars(differenceDateH($task['date_deadline'])['badge'])?>">
                     <i class="far fa-clock"></i>
-                    <?=differenceDateH($task['date_deadline'])['calc']?>
+                        <?=htmlspecialchars(differenceDateH($task['date_deadline'])['calc'])?>
                   </small>
 
                   <?php endif; ?>

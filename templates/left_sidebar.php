@@ -14,7 +14,7 @@
             <img src="static/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?=$name_user_sidebar?></a>
+            <a href="#" class="d-block"><?=htmlspecialchars($name_user_sidebar)?></a>
           </div>
         </div>
 
@@ -24,15 +24,29 @@
             <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
 
-               <?php foreach($projects as $key => $project):?>
-                <?=renderTemplate('project.php', ['project' => $project])?>
-               <?php endforeach;?>
+              <?php foreach ($projects as $key => $project) : ?>
+                  <?=renderTemplate(
+                      'project.php',
+                      [
+                      'project' => $project,
+                      'activProject' => $activProject
+                      ]
+                  )?>
+              <?php endforeach; ?>
                
               <li class="nav-item">
               <a href="index.php" class="nav-link">
                 <i class="nav-icon fas fa-plus"></i>
                 <p>
                   Додати проект
+                </p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="add.php" class="nav-link">
+                <i class="nav-icon fas fa-plus"></i>
+                <p>
+                  Додати завдання
                 </p>
               </a>
             </li>

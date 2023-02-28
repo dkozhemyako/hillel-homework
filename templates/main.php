@@ -35,10 +35,10 @@
             </div>
             <div class="card-body connectedSortable" data-status="backlog">
          
-          <?php foreach($tasks as $task):?>
-          <?php if ($task['status'] === 'back-log') : ?>
-          <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; ?>
+          <?php foreach ($tasks as $task) : ?>
+              <?php if ($task['status'] === 'back-log') : ?>
+                    <?=renderTemplate('card.php', ['task' => $task])?>
+              <?php endif; ?>
           <?php endforeach; ?>
           
   
@@ -52,10 +52,10 @@
             </div>
             <div class="card-body connectedSortable" data-status="to-do">
               
-          <?php foreach($tasks as $task):?>
-          <?php if ($task['status'] === 'to-do') : ?>
-          <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; ?>
+          <?php foreach ($tasks as $task) : ?>
+                <?php if ($task['status'] === 'to-do') : ?>
+                      <?=renderTemplate('card.php', ['task' => $task])?>
+                <?php endif; ?>
           <?php endforeach; ?>
 
             </div>
@@ -68,10 +68,10 @@
             </div>
             <div class="card-body connectedSortable" data-status="in-progress">
               
-          <?php foreach($tasks as $task):?>
-          <?php if ($task['status'] === 'in-progress') : ?>
-          <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; ?>
+          <?php foreach ($tasks as $task) : ?>
+                  <?php if ($task['status'] === 'in-progress') : ?>
+                         <?=renderTemplate('card.php', ['task' => $task])?>
+                  <?php endif; ?>
           <?php endforeach; ?>
 
             </div>
@@ -84,10 +84,10 @@
             </div>
             <div class="card-body connectedSortable" data-status="done">
               
-          <?php foreach($tasks as $task):?>
-          <?php if ($task['status'] === 'done') : ?>
-          <?=renderTemplate('card.php', ['task' => $task])?>
-          <?php endif; ?>
+          <?php foreach ($tasks as $task) : ?>
+                    <?php if ($task['status'] === 'done') : ?>
+                        <?=renderTemplate('card.php', ['task' => $task])?>
+                    <?php endif; ?>
           <?php endforeach; ?>
 
             </div>
