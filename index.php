@@ -14,9 +14,11 @@ $id = filter_input(
     ],
 );
 
+
 $mysqli = my_mysqli_connect();
 
 $user_id = 1;
+
 
 $projects = sql_select_projects_count_tasks(
     $mysqli,
