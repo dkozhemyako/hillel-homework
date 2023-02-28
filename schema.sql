@@ -5,7 +5,7 @@ create table users
 (
     id int unsigned not null auto_increment,
     created_at datetime not null,
-    email varchar(30) not null,
+    email varchar(100) not null,
     pass varchar(255) not null,
     name varchar(30) not null,
 

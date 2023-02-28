@@ -39,7 +39,7 @@ if (isset($_POST['reg_btn'])) {
         $input_errors['reg_email'] = 'Вкажіть email в форматі example@domain';
     }
 
-    if (strlen($myinputs['reg_email']) > 30) {
+    if (strlen($myinputs['reg_email']) > 100) {
         $input_errors['reg_email'] = 'Максимум 30 символів';
     }
 
@@ -59,7 +59,7 @@ if (isset($_POST['reg_btn'])) {
         $input_errors['reg_password_check'] = 'Паролі не співпадають, повторіть спробу';
     }
 
-    if (strlen($myinputs['reg_password']) > 30 || strlen($myinputs['reg_password_check']) > 30) {
+    if (strlen($myinputs['reg_password']) > 100 || strlen($myinputs['reg_password_check']) > 30) {
         $input_errors['reg_password'] = 'Максимум 30 символів';
     }
 

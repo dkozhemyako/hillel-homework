@@ -60,8 +60,7 @@
           </div>
           <div class="input-group mb-3">
             <input name="reg_password" type="password" placeholder="Пароль" class="form-control
-            <?= !empty($input_errors['reg_password']) ? ' is-invalid' : ''?>"
-            value="<?=htmlspecialchars($myinputs['reg_password'])?>">
+            <?= !empty($input_errors['reg_password']) ? ' is-invalid' : ''?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -75,8 +74,7 @@
           </div>
           <div class="input-group mb-3">
             <input name="reg_password_check" type="password" placeholder="Повторіть пароль" class="form-control
-            <?= !empty($input_errors['reg_password_check']) ? ' is-invalid' : ''?>"
-            value="<?=htmlspecialchars($myinputs['reg_password_check'])?>">
+            <?= !empty($input_errors['reg_password_check']) ? ' is-invalid' : ''?>">
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
@@ -92,8 +90,10 @@
             <div class="col-12">
               <div class="icheck-primary">
                 <input name="reg_agreTerms" type="checkbox" id="agreeTerms" name="terms" value="agree">
-                <label for="agreeTerms">
-                <?= !empty($input_errors['reg_agreTerms']) ? htmlspecialchars($input_errors['reg_agreTerms']) : 'Я згоден(а) з'?>
+                <label for="agreeTerms" 
+                <?= !empty($input_errors['reg_agreTerms']) ? 'style="color: red;"' : ''?>
+                >
+                <?= !empty($input_errors['reg_agreTerms']) ? htmlspecialchars($input_errors['reg_agreTerms']) : 'Я згоден(а) з '?>
                   <a href="#">умовами</a>
                 </label>
 
