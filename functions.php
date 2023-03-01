@@ -173,13 +173,6 @@ function my_mysqli_connect()
     return $result;
 }
 
-function sql_select_users($mysqli)
-{
-    $result = mysqli_query($mysqli, 'select * from users');
-    return mysqli_fetch_assoc($result);
-}
-
-
 function sql_select_tasks($mysqli, $project_id)
 {
     $request = "select * from tasks where project_id= ?";
@@ -228,17 +221,6 @@ function checkProjects($id, $projects = [])
         return false;
 }
 
-function checkUsers($email, $users)
-{
-    if ($email !== null && $email !== false) {
-        foreach ($users as $user) {
-            if ($email === $user['email']) {
-                return true;
-            }
-        }
-    }
-        return false;
-}
 
 function tasksAdd($mysqli, $created_at, $name, $body, $data_set, $date_deadline, $user_id, $project_id)
 {
@@ -287,4 +269,25 @@ function usersAdd($mysqli, $created_at, $email, $pass, $name)
         return true;
     }
     return false;
+}
+
+function checkUsers($mysqli, $email)
+{
+    $request = "select * from users where email =?";
+
+    $stmt = mysqli_prepare($mysqli, $request);
+    mysqli_stmt_bind_param(
+        $stmt,
+        's',
+        $email,
+    );
+
+    $check_sql = mysqli_stmt_execute($stmt);
+    $stmt_res = mysqli_stmt_get_result($stmt);
+
+    if ($check_sql === false || $stmt_res->num_rows > 0) {
+        return false;
+    }
+
+    return true;
 }

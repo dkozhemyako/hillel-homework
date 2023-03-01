@@ -14,8 +14,6 @@ $myinputs = [
     'reeg_agreTerms' => '',
 ];
 
-$users[] = sql_select_users($mysqli);
-
 if (isset($_POST['reg_btn'])) {
     $args = array(
         'reg_name'   => FILTER_UNSAFE_RAW,
@@ -43,7 +41,7 @@ if (isset($_POST['reg_btn'])) {
         $input_errors['reg_email'] = 'Максимум 30 символів';
     }
 
-    if (checkUsers($myinputs['reg_email'], $users)) {
+    if (!checkUsers($mysqli, $myinputs['reg_email'])) {
         $input_errors['reg_email'] = 'Такий користувач вже зареєстрований';
     }
 
