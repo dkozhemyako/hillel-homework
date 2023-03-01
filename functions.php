@@ -273,7 +273,7 @@ function usersAdd($mysqli, $created_at, $email, $pass, $name)
 
 function checkUsers($mysqli, $email)
 {
-    $request = "select * from users where email =?";
+    $request = "select email from users where email =?";
 
     $stmt = mysqli_prepare($mysqli, $request);
     mysqli_stmt_bind_param(
