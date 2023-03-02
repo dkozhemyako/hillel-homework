@@ -15,6 +15,7 @@
           </div>
           <div class="info">
             <a href="#" class="d-block"><?=htmlspecialchars($name_user_sidebar)?></a>
+            <a href="logout.php" class="d-block">Вихід</a>
           </div>
         </div>
 

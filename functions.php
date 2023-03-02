@@ -291,3 +291,32 @@ function checkUsers($mysqli, $email)
 
     return true;
 }
+
+function checkLogin($mysqli, $email, $password)
+{
+    if ($email !== '' && $password !== '') {
+        $request = "select pass, id, name from users where email =?";
+
+        $stmt = mysqli_prepare($mysqli, $request);
+        mysqli_stmt_bind_param(
+            $stmt,
+            's',
+            $email,
+        );
+
+        $check_sql = mysqli_stmt_execute($stmt);
+        $stmt_res = mysqli_stmt_get_result($stmt);
+        $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+
+        if ($stmt_res->num_rows > 0) {
+            if (password_verify($password, $result['0']['pass']) && $stmt_res) {
+                return
+                [
+                    'id' => $result['0']['id'],
+                    'name' => $result['0']['name'],
+                ];
+            }
+        }
+    }
+    return 0;
+}

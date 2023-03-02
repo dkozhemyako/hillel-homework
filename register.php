@@ -38,7 +38,7 @@ if (isset($_POST['reg_btn'])) {
     }
 
     if (strlen($myinputs['reg_email']) > 100) {
-        $input_errors['reg_email'] = 'Максимум 30 символів';
+        $input_errors['reg_email'] = 'Максимум 100 символів';
     }
 
     if (!checkUsers($mysqli, $myinputs['reg_email'])) {
@@ -58,7 +58,7 @@ if (isset($_POST['reg_btn'])) {
     }
 
     if (strlen($myinputs['reg_password']) > 100 || strlen($myinputs['reg_password_check']) > 30) {
-        $input_errors['reg_password'] = 'Максимум 30 символів';
+        $input_errors['reg_password'] = 'Максимум 100 символів';
     }
 
     if ($myinputs['reg_agreTerms'] !== 'agree') {
