@@ -43,7 +43,8 @@
                   <div class="form-group">
                     <label for="inputDescription">Опис задачі</label>
                     <textarea id="inputDescription" name="inputDescription" class="form-control
-                    <?= !empty($input_errors['inputDescription']) ? ' is-invalid' : ''?>"rows="4"><?=htmlspecialchars($myinputs['inputDescription'])?></textarea>
+                    <?= !empty($input_errors['inputDescription']) ? ' is-invalid' :
+                    ''?>"rows="4"><?=htmlspecialchars($myinputs['inputDescription'])?></textarea>
                     <?= !empty($input_errors['inputDescription']) ?
                     '<span id="inputDescriptionEr" class="error invalid-feedback">' .
                     htmlspecialchars($input_errors['inputDescription']) . '</span>'

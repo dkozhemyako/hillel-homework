@@ -33,8 +33,8 @@ if (isset($_POST['login_btn'])) {
         $input_errors['password'] = 'Вкажіть пароль';
     }
 
-    if (strlen($myinputs['password']) > 100) {
-        $input_errors['password'] = 'Максимум 100 символів';
+    if (strlen($myinputs['password']) < 8) {
+        $input_errors['password'] = 'Мінімум 8 символів';
     }
 
     $checkLogin = checkLogin($mysqli, $myinputs['login'], $myinputs['password']);

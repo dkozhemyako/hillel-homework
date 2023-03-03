@@ -178,15 +178,16 @@ function sql_select_tasks($mysqli, $project_id)
     $request = "select * from tasks where project_id= ?";
 
     $stmt = mysqli_prepare($mysqli, $request);
-    mysqli_stmt_bind_param($stmt, 'i', $project_id);
-    $check_sql = mysqli_stmt_execute($stmt);
-
-    if ($check_sql === false) {
-        die('SQL request is not complited');
+    if ($stmt !== false) {
+        mysqli_stmt_bind_param($stmt, 'i', $project_id);
+        $check_sql = mysqli_stmt_execute($stmt);
+        if ($check_sql !== false) {
+            $stmt_res = mysqli_stmt_get_result($stmt);
+            $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+            return $result;
+        }
     }
-    $stmt_res = mysqli_stmt_get_result($stmt);
-    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
-    return $result;
+    die('SQL request is not complited');
 }
 
 function sql_select_projects_count_tasks($mysqli, $user_id)
@@ -197,16 +198,16 @@ function sql_select_projects_count_tasks($mysqli, $user_id)
     where projects.user_id= ? 
     GROUP BY projects.id";
     $stmt = mysqli_prepare($mysqli, $request);
-    mysqli_stmt_bind_param($stmt, 'i', $user_id);
-    $check_sql = mysqli_stmt_execute($stmt);
-
-    if ($check_sql === false) {
-        die('SQL request is not complited');
+    if ($stmt !== false) {
+        mysqli_stmt_bind_param($stmt, 'i', $user_id);
+        $check_sql = mysqli_stmt_execute($stmt);
+        if ($check_sql !== false) {
+            $stmt_res = mysqli_stmt_get_result($stmt);
+            $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+            return $result;
+        }
     }
-
-    $stmt_res = mysqli_stmt_get_result($stmt);
-    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
-    return $result;
+    die('SQL request is not complited');
 }
 
 function checkProjects($id, $projects = [])
@@ -221,29 +222,28 @@ function checkProjects($id, $projects = [])
         return false;
 }
 
-
 function tasksAdd($mysqli, $created_at, $name, $body, $data_set, $date_deadline, $user_id, $project_id)
 {
     $request = "insert into tasks
     (created_at, name, body, data_set, date_deadline, user_id, project_id)
     values (?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($mysqli, $request);
-    mysqli_stmt_bind_param(
-        $stmt,
-        'sssssii',
-        $created_at,
-        $name,
-        $body,
-        $data_set,
-        $date_deadline,
-        $user_id,
-        $project_id
-    );
-
-    $check_sql = mysqli_stmt_execute($stmt);
-
-    if ($check_sql === true) {
-        return true;
+    if ($stmt !== false) {
+        mysqli_stmt_bind_param(
+            $stmt,
+            'sssssii',
+            $created_at,
+            $name,
+            $body,
+            $data_set,
+            $date_deadline,
+            $user_id,
+            $project_id
+        );
+        $check_sql = mysqli_stmt_execute($stmt);
+        if ($check_sql === true) {
+            return true;
+        }
     }
     return false;
 }
@@ -254,19 +254,19 @@ function usersAdd($mysqli, $created_at, $email, $pass, $name)
     (created_at, email, pass, name)
     values (?, ?, ?, ?)";
     $stmt = mysqli_prepare($mysqli, $request);
-    mysqli_stmt_bind_param(
-        $stmt,
-        'ssss',
-        $created_at,
-        $email,
-        $pass,
-        $name,
-    );
-
-    $check_sql = mysqli_stmt_execute($stmt);
-
-    if ($check_sql === true) {
-        return true;
+    if ($stmt !== false) {
+        mysqli_stmt_bind_param(
+            $stmt,
+            'ssss',
+            $created_at,
+            $email,
+            $pass,
+            $name,
+        );
+        $check_sql = mysqli_stmt_execute($stmt);
+        if ($check_sql === true) {
+            return true;
+        }
     }
     return false;
 }
@@ -276,20 +276,20 @@ function checkUsers($mysqli, $email)
     $request = "select email from users where email =?";
 
     $stmt = mysqli_prepare($mysqli, $request);
-    mysqli_stmt_bind_param(
-        $stmt,
-        's',
-        $email,
-    );
-
-    $check_sql = mysqli_stmt_execute($stmt);
-    $stmt_res = mysqli_stmt_get_result($stmt);
-
-    if ($check_sql === false || $stmt_res->num_rows > 0) {
-        return false;
+    if ($stmt !== false) {
+        mysqli_stmt_bind_param(
+            $stmt,
+            's',
+            $email,
+        );
+        $check_sql = mysqli_stmt_execute($stmt);
+        if ($check_sql !== false) {
+            $stmt_res = mysqli_stmt_get_result($stmt);
+            if ($stmt_res->num_rows > 0) {
+                return false;
+            }
+        }
     }
-
-    return true;
 }
 
 function checkLogin($mysqli, $email, $password)
@@ -298,23 +298,27 @@ function checkLogin($mysqli, $email, $password)
         $request = "select pass, id, name from users where email =?";
 
         $stmt = mysqli_prepare($mysqli, $request);
-        mysqli_stmt_bind_param(
-            $stmt,
-            's',
-            $email,
-        );
-
-        $check_sql = mysqli_stmt_execute($stmt);
-        $stmt_res = mysqli_stmt_get_result($stmt);
-        $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
-
-        if ($stmt_res->num_rows > 0) {
-            if (password_verify($password, $result['0']['pass']) && $stmt_res) {
-                return
-                [
-                    'id' => $result['0']['id'],
-                    'name' => $result['0']['name'],
-                ];
+        if ($stmt !== false) {
+            mysqli_stmt_bind_param(
+                $stmt,
+                's',
+                $email,
+            );
+            $check_sql = mysqli_stmt_execute($stmt);
+            if ($check_sql !== false) {
+                $stmt_res = mysqli_stmt_get_result($stmt);
+                if ($stmt_res !== false) {
+                    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+                    if ($stmt_res->num_rows > 0) {
+                        if (password_verify($password, $result['0']['pass'])) {
+                            return
+                            [
+                                'id' => $result['0']['id'],
+                                'name' => $result['0']['name'],
+                            ];
+                        }
+                    }
+                }
             }
         }
     }
