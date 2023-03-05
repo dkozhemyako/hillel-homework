@@ -178,16 +178,19 @@ function sql_select_tasks($mysqli, $project_id)
     $request = "select * from tasks where project_id= ?";
 
     $stmt = mysqli_prepare($mysqli, $request);
-    if ($stmt !== false) {
-        mysqli_stmt_bind_param($stmt, 'i', $project_id);
-        $check_sql = mysqli_stmt_execute($stmt);
-        if ($check_sql !== false) {
-            $stmt_res = mysqli_stmt_get_result($stmt);
-            $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
-            return $result;
-        }
+    if ($stmt === false) {
+        die('mysqli_prepare is not complited');
     }
-    die('SQL request is not complited');
+
+    mysqli_stmt_bind_param($stmt, 'i', $project_id);
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+
+    $stmt_res = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+    return $result;
 }
 
 function sql_select_projects_count_tasks($mysqli, $user_id)
@@ -198,16 +201,18 @@ function sql_select_projects_count_tasks($mysqli, $user_id)
     where projects.user_id= ? 
     GROUP BY projects.id";
     $stmt = mysqli_prepare($mysqli, $request);
-    if ($stmt !== false) {
-        mysqli_stmt_bind_param($stmt, 'i', $user_id);
-        $check_sql = mysqli_stmt_execute($stmt);
-        if ($check_sql !== false) {
-            $stmt_res = mysqli_stmt_get_result($stmt);
-            $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
-            return $result;
-        }
+    if ($stmt === false) {
+        die('mysqli_prepare is not complited');
     }
-    die('SQL request is not complited');
+    mysqli_stmt_bind_param($stmt, 'i', $user_id);
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+
+    $stmt_res = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+    return $result;
 }
 
 function checkProjects($id, $projects = [])
@@ -228,24 +233,25 @@ function tasksAdd($mysqli, $created_at, $name, $body, $data_set, $date_deadline,
     (created_at, name, body, data_set, date_deadline, user_id, project_id)
     values (?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($mysqli, $request);
-    if ($stmt !== false) {
-        mysqli_stmt_bind_param(
-            $stmt,
-            'sssssii',
-            $created_at,
-            $name,
-            $body,
-            $data_set,
-            $date_deadline,
-            $user_id,
-            $project_id
-        );
-        $check_sql = mysqli_stmt_execute($stmt);
-        if ($check_sql === true) {
-            return true;
-        }
+    if ($stmt === false) {
+        die('mysqli_prepare is not complited');
     }
-    return false;
+    mysqli_stmt_bind_param(
+        $stmt,
+        'sssssii',
+        $created_at,
+        $name,
+        $body,
+        $data_set,
+        $date_deadline,
+        $user_id,
+        $project_id
+    );
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+    return true;
 }
 
 function usersAdd($mysqli, $created_at, $email, $pass, $name)
@@ -255,40 +261,45 @@ function usersAdd($mysqli, $created_at, $email, $pass, $name)
     values (?, ?, ?, ?)";
     $stmt = mysqli_prepare($mysqli, $request);
     if ($stmt !== false) {
-        mysqli_stmt_bind_param(
-            $stmt,
-            'ssss',
-            $created_at,
-            $email,
-            $pass,
-            $name,
-        );
-        $check_sql = mysqli_stmt_execute($stmt);
-        if ($check_sql === true) {
-            return true;
-        }
+        die('mysqli_prepare is not complited');
     }
-    return false;
+    mysqli_stmt_bind_param(
+        $stmt,
+        'ssss',
+        $created_at,
+        $email,
+        $pass,
+        $name,
+    );
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+    return true;
 }
 
 function checkUsers($mysqli, $email)
 {
     $request = "select email from users where email =?";
-
     $stmt = mysqli_prepare($mysqli, $request);
-    if ($stmt !== false) {
-        mysqli_stmt_bind_param(
-            $stmt,
-            's',
-            $email,
-        );
-        $check_sql = mysqli_stmt_execute($stmt);
-        if ($check_sql !== false) {
-            $stmt_res = mysqli_stmt_get_result($stmt);
-            if ($stmt_res->num_rows > 0) {
-                return false;
-            }
-        }
+    if ($stmt === false) {
+        die('mysqli_prepare is not complited');
+    }
+    mysqli_stmt_bind_param(
+        $stmt,
+        's',
+        $email,
+    );
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+    $stmt_res = mysqli_stmt_get_result($stmt);
+    if ($stmt_res === false) {
+        die('mysqli_stmt_get_result is not complited');
+    }
+    if ($stmt_res->num_rows > 0) {
+        return false;
     }
 }
 
@@ -296,30 +307,30 @@ function checkLogin($mysqli, $email, $password)
 {
     if ($email !== '' && $password !== '') {
         $request = "select pass, id, name from users where email =?";
-
         $stmt = mysqli_prepare($mysqli, $request);
-        if ($stmt !== false) {
-            mysqli_stmt_bind_param(
-                $stmt,
-                's',
-                $email,
-            );
-            $check_sql = mysqli_stmt_execute($stmt);
-            if ($check_sql !== false) {
-                $stmt_res = mysqli_stmt_get_result($stmt);
-                if ($stmt_res !== false) {
-                    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
-                    if ($stmt_res->num_rows > 0) {
-                        if (password_verify($password, $result['0']['pass'])) {
-                            return
-                            [
-                                'id' => $result['0']['id'],
-                                'name' => $result['0']['name'],
-                            ];
-                        }
-                    }
-                }
-            }
+        if ($stmt === false) {
+            die('mysqli_prepare is not complited');
+        }
+        mysqli_stmt_bind_param(
+            $stmt,
+            's',
+            $email,
+        );
+        $check_sql = mysqli_stmt_execute($stmt);
+        if ($check_sql === false) {
+            die('mysqli_stmt_execute is not complited');
+        }
+        $stmt_res = mysqli_stmt_get_result($stmt);
+        if ($stmt_res === false) {
+            die('mysqli_stmt_get_result is not complited');
+        }
+        $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+        if ($stmt_res->num_rows > 0 && password_verify($password, $result['0']['pass'])) {
+            return
+            [
+                'id' => $result['0']['id'],
+                'name' => $result['0']['name'],
+            ];
         }
     }
     return 0;
