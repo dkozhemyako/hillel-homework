@@ -1,6 +1,15 @@
 <?php
 
+session_start();
+
 require_once('functions.php');
+
+if (empty($_SESSION['authorization'])) {
+    print renderTemplate(
+        'guest.php'
+    );
+    die;
+}
 
 $id = filter_input(
     INPUT_GET,
@@ -14,11 +23,9 @@ $id = filter_input(
     ],
 );
 
-
 $mysqli = my_mysqli_connect();
 
-$user_id = 1;
-
+$user_id = $_SESSION['user_id'];
 
 $projects = sql_select_projects_count_tasks(
     $mysqli,
@@ -38,7 +45,7 @@ $tasks = sql_select_tasks(
 $left_sidebar = renderTemplate(
     'left_sidebar.php',
     [
-    'name_user_sidebar' => 'Дмитро Кожемяко',
+    'name_user_sidebar' => $_SESSION['user_name'],
     'projects' => $projects,
     'activProject' => $id,
     ]

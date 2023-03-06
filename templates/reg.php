@@ -41,7 +41,7 @@
                   '<span id="reg_name_Er" class="error invalid-feedback">' .
                   htmlspecialchars($input_errors['reg_name']) . '</span>'
                   : ''
-              ?>
+            ?>
           </div>
           <div class="input-group mb-3">
             <input name="reg_email" type="email" placeholder="Email" class="form-control
@@ -113,7 +113,7 @@
           </div>
         </form>
 
-        <a href="login.php" class="text-center">В мене вже є аккаунт</a>
+        <a href="authorization.php" class="text-center">В мене вже є аккаунт</a>
       </div>
       <!-- /.form-box -->
     </div><!-- /.card -->

@@ -38,10 +38,10 @@ if (isset($_POST['reg_btn'])) {
     }
 
     if (strlen($myinputs['reg_email']) > 100) {
-        $input_errors['reg_email'] = 'Максимум 30 символів';
+        $input_errors['reg_email'] = 'Максимум 100 символів';
     }
 
-    if (!checkUsers($mysqli, $myinputs['reg_email'])) {
+    if (checkUsers($mysqli, $myinputs['reg_email']) === false) {
         $input_errors['reg_email'] = 'Такий користувач вже зареєстрований';
     }
 
@@ -57,8 +57,8 @@ if (isset($_POST['reg_btn'])) {
         $input_errors['reg_password_check'] = 'Паролі не співпадають, повторіть спробу';
     }
 
-    if (strlen($myinputs['reg_password']) > 100 || strlen($myinputs['reg_password_check']) > 30) {
-        $input_errors['reg_password'] = 'Максимум 30 символів';
+    if (strlen($myinputs['reg_password']) < 8 || strlen($myinputs['reg_password_check']) < 8) {
+        $input_errors['reg_password'] = 'Мінімум 8 символів';
     }
 
     if ($myinputs['reg_agreTerms'] !== 'agree') {

@@ -27,8 +27,8 @@
       <div class="inner">
         <h3 class="masthead-brand">Завдання та проекти</h3>
         <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link" href="#">Увійти</a>
-          <a class="nav-link" href="#">Зареєструватися</a>
+          <a class="nav-link" href="authorization.php">Увійти</a>
+          <a class="nav-link" href="register.php">Зареєструватися</a>
         </nav>
       </div>
     </header>
