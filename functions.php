@@ -173,7 +173,6 @@ function my_mysqli_connect()
     return $result;
 }
 
-
 function sql_select_tasks($mysqli, $project_id)
 {
     $request = "select * from tasks where project_id= ?";
@@ -222,6 +221,7 @@ function checkProjects($id, $projects = [])
         return false;
 }
 
+
 function tasksAdd($mysqli, $created_at, $name, $body, $data_set, $date_deadline, $user_id, $project_id)
 {
     $request = "insert into tasks
@@ -246,4 +246,48 @@ function tasksAdd($mysqli, $created_at, $name, $body, $data_set, $date_deadline,
         return true;
     }
     return false;
+}
+
+function usersAdd($mysqli, $created_at, $email, $pass, $name)
+{
+    $request = "insert into users
+    (created_at, email, pass, name)
+    values (?, ?, ?, ?)";
+    $stmt = mysqli_prepare($mysqli, $request);
+    mysqli_stmt_bind_param(
+        $stmt,
+        'ssss',
+        $created_at,
+        $email,
+        $pass,
+        $name,
+    );
+
+    $check_sql = mysqli_stmt_execute($stmt);
+
+    if ($check_sql === true) {
+        return true;
+    }
+    return false;
+}
+
+function checkUsers($mysqli, $email)
+{
+    $request = "select email from users where email =?";
+
+    $stmt = mysqli_prepare($mysqli, $request);
+    mysqli_stmt_bind_param(
+        $stmt,
+        's',
+        $email,
+    );
+
+    $check_sql = mysqli_stmt_execute($stmt);
+    $stmt_res = mysqli_stmt_get_result($stmt);
+
+    if ($check_sql === false || $stmt_res->num_rows > 0) {
+        return false;
+    }
+
+    return true;
 }
