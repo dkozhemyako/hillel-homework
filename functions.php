@@ -260,7 +260,7 @@ function usersAdd($mysqli, $created_at, $email, $pass, $name)
     (created_at, email, pass, name)
     values (?, ?, ?, ?)";
     $stmt = mysqli_prepare($mysqli, $request);
-    if ($stmt !== false) {
+    if ($stmt === false) {
         die('mysqli_prepare is not complited');
     }
     mysqli_stmt_bind_param(
