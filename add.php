@@ -60,7 +60,7 @@ if (isset($_POST['btn_task_add'])) {
 
     if (empty($input_errors)) {
         $uploadfile = '';
-        $myinputs['inputDate'] = null;
+        $myinputs['inputDate'] = $myinputs['inputDate'] === '' ? null : $myinputs['inputDate'];
         if (isset($_FILES['inputTaskFile'])) {
             move_uploaded_file($_FILES['inputTaskFile']['tmp_name'], $_FILES['inputTaskFile']['name']);
             $uploadfile = $_FILES['inputTaskFile']['name'];

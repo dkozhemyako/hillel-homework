@@ -1,0 +1,10 @@
+{
+    "require": {
+        "wixel/gump": "^2.0"
+    },
+    "autoload": {
+        "files": [
+            "functions.php"
+        ]
+    }
+}

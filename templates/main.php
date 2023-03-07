@@ -15,10 +15,23 @@
             <div class="col-md-4 offset-md-4">
               <div class="row">
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                  <a type="button" href="#" class="btn btn-secondary active">Усі завдання</a>
-                  <a type="button" href="#" class="btn btn-default">Порядок денний</a>
-                  <a type="button" href="#" class="btn btn-default">Завтра</a>
-                  <a type="button" href="#" class="btn btn-default">Прострочені</a>
+
+                  <a type="button" href="index.php?id=<?=$id?>&filter=all"
+                  class="<?=$active_filter == 'all' ? 'btn btn-secondary active' : 'btn btn-default'?>">
+                  Усі завдання</a>
+
+                  <a type="button" href="index.php?id=<?=$id?>&filter=today"
+                  class="<?=$active_filter == 'today' ? 'btn btn-secondary active' : 'btn btn-default'?>">
+                  Порядок денний</a>
+
+                  <a type="button" href="index.php?id=<?=$id?>&filter=tomorrow"
+                  class="<?=$active_filter == 'tomorrow' ? 'btn btn-secondary active' : 'btn btn-default'?>">
+                  Завтра</a>
+
+                  <a type="button" href="index.php?id=<?=$id?>&filter=overdue"
+                  class="<?=$active_filter == 'overdue' ? 'btn btn-secondary active' : 'btn btn-default'?>">
+                  Прострочені</a>
+
                 </div>
               </div>
             </div>

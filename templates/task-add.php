@@ -111,11 +111,10 @@
           </div>
           <div class="row">
             <div class="col-12">
-              <a href="#" class="btn btn-secondary">Cancel</a>
-              <input type="submit" value="Create new Task" class="btn btn-success" name="btn_task_add">
+              <a href="index.php" class="btn btn-secondary">Відмінити</a>
+              <input type="submit" value="Створити нове завдання" class="btn btn-success" name="btn_task_add">
             </div>
           </div>
         </form>
       </section>
     </div>
-
