@@ -146,9 +146,12 @@ function renderTemplate($name, array $data = [])
     return $result;
 }
 
-function differenceDateH($date, $add_string = "h")
+function differenceDateH($date, $add_string = "h", $day = false)
 {
-    $now = time();
+    $now = strtotime(date('Y-m-d'));
+    if ($day === false) {
+        $now = time();
+    }
     $userdate = strtotime($date);
     $calc = floor(($userdate - $now) / 3600);
 
@@ -175,7 +178,7 @@ function my_mysqli_connect()
 
 function sql_select_tasks($mysqli, $project_id)
 {
-    $request = "select * from tasks where project_id= ?";
+    $request = "select * from tasks where project_id=?";
 
     $stmt = mysqli_prepare($mysqli, $request);
     if ($stmt === false) {
@@ -183,6 +186,7 @@ function sql_select_tasks($mysqli, $project_id)
     }
 
     mysqli_stmt_bind_param($stmt, 'i', $project_id);
+
     $check_sql = mysqli_stmt_execute($stmt);
     if ($check_sql === false) {
         die('mysqli_stmt_execute is not complited');
@@ -334,4 +338,114 @@ function checkLogin($mysqli, $email, $password)
         }
     }
     return 0;
+}
+
+function projAdd($mysqli, $inputName, $user_id)
+{
+    $request = "insert into projects
+    (name, user_id)
+    values (?, ?)";
+    $stmt = mysqli_prepare($mysqli, $request);
+    if ($stmt === false) {
+        die('mysqli_prepare is not complited');
+    }
+    mysqli_stmt_bind_param(
+        $stmt,
+        'si',
+        $inputName,
+        $user_id,
+    );
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+    return true;
+}
+
+function sql_select_tasks_user($mysqli, $user_id)
+{
+    $request = "select * from tasks where user_id= ?";
+
+    $stmt = mysqli_prepare($mysqli, $request);
+    if ($stmt === false) {
+        die('mysqli_prepare is not complited');
+    }
+
+    mysqli_stmt_bind_param($stmt, 'i', $user_id);
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+
+    $stmt_res = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+    return $result;
+}
+
+function checkTasks($id, $tasks = [])
+{
+    if ($id !== null && $id !== false) {
+        foreach ($tasks as $task) {
+            if ($id === $task['id']) {
+                return true;
+            }
+        }
+    }
+        return false;
+}
+
+function changeStatus($mysqli, $status, $task_id)
+{
+    $request = "update tasks set status = ? where id = ?";
+    $stmt = mysqli_prepare($mysqli, $request);
+    if ($stmt === false) {
+        die('mysqli_prepare is not complited');
+    }
+    mysqli_stmt_bind_param(
+        $stmt,
+        'si',
+        $status,
+        $task_id,
+    );
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+        die('mysqli_stmt_execute is not complited');
+    }
+    return true;
+}
+
+function filterTask($tasks, $filter)
+{
+    $today = [];
+    $tomorrow = [];
+    $overdue = [];
+
+    if ($filter === 'all') {
+        return $tasks;
+    }
+
+    foreach ($tasks as $task) {
+        if ($task['date_deadline'] !== null) {
+            $diff = differenceDateH($task['date_deadline'], '', true)['calc'];
+            if ($diff > 0 && $diff <= 24) {
+                $today[] = $task;
+            }
+            if ($diff > 24 && $diff <= 48) {
+                $tomorrow[] = $task;
+            }
+            if ($diff == 0) {
+                $overdue[] = $task;
+            }
+        }
+    }
+
+    if ($filter === 'today') {
+        return $today;
+    }
+    if ($filter === 'tomorrow') {
+        return $tomorrow;
+    }
+    if ($filter === 'overdue') {
+        return $overdue;
+    }
 }

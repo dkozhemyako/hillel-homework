@@ -36,7 +36,7 @@
               <?php endforeach; ?>
                
               <li class="nav-item">
-              <a href="index.php" class="nav-link">
+              <a href="add-proj.php" class="nav-link">
                 <i class="nav-icon fas fa-plus"></i>
                 <p>
                   Додати проект

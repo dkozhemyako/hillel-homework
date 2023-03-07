@@ -1,5 +1,5 @@
 <li class="nav-item">
-    <a href="index.php?id=<?=htmlspecialchars($project['id'])?>" class="nav-link <?=$activProject === $project['id'] ? ' active' : ''?>">
+    <a href="index.php?id=<?=htmlspecialchars($project['id'])?>&filter=all" class="nav-link <?=$activProject === $project['id'] ? ' active' : ''?>">
         <i class="nav-icon fas fa-columns"></i>
         <p>
         <?=htmlspecialchars($project['name'])?>
