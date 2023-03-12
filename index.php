@@ -4,7 +4,6 @@ session_start();
 
 require_once('functions.php');
 
-
 if (empty($_SESSION['authorization'])) {
     print renderTemplate(
         'guest.php'
@@ -38,17 +37,15 @@ if (checkProjects($id, $projects) === false && $id !== null) {
     exit;
 }
 
-
+$filter = filterTask($_GET['filter']);
 $tasks = sql_select_tasks(
     $mysqli,
     $id,
+    $filter,
 );
+$active_filter = $_GET['filter'];
 
-$active_filter = '';
-if (isset($_GET['filter'])) {
-    $tasks = filterTask($tasks, $_GET['filter']);
-    $active_filter = $_GET['filter'];
-}
+
 
 $left_sidebar = renderTemplate(
     'left_sidebar.php',
