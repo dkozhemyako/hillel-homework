@@ -176,16 +176,33 @@ function my_mysqli_connect()
     return $result;
 }
 
-function sql_select_tasks($mysqli, $project_id)
+function sql_select_tasks($mysqli, $project_id, $filter = [])
 {
     $request = "select * from tasks where project_id=?";
+    $args = [
+        'i',
+        $project_id,
+    ];
+
+    if (!empty($filter) && $filter['dateTo'] !== null && $filter['dateFrom'] !== null) {
+        $request .= ' and date_deadline between ? and ?';
+        $args[0] .= 'ss';
+        $args[] = $filter['dateFrom'];
+        $args[] = $filter['dateTo'];
+    } elseif (!empty($filter) && $filter['dateTo'] !== null) {
+        $request .= ' and date_deadline <= ?';
+        $args[0] .= 's';
+        $args[] = $filter['dateTo'];
+    }
 
     $stmt = mysqli_prepare($mysqli, $request);
     if ($stmt === false) {
         die('mysqli_prepare is not complited');
     }
 
-    mysqli_stmt_bind_param($stmt, 'i', $project_id);
+    array_unshift($args, $stmt);
+
+    call_user_func_array('mysqli_stmt_bind_param', $args);
 
     $check_sql = mysqli_stmt_execute($stmt);
     if ($check_sql === false) {
@@ -414,6 +431,7 @@ function changeStatus($mysqli, $status, $task_id)
     return true;
 }
 
+/*
 function filterTask($tasks, $filter)
 {
     $today = [];
@@ -448,4 +466,56 @@ function filterTask($tasks, $filter)
     if ($filter === 'overdue') {
         return $overdue;
     }
+}
+*/
+
+function filterTask($filter)
+{
+    $dateFrom = null;
+    $dateTo = null;
+
+    switch ($filter) {
+        case 'today':
+            $dateFrom = date('Y-m-d') . ' 00:00:00';
+            $dateTo = date('Y-m-d') . ' 23:59:59';
+            break;
+        case 'tomorrow':
+            $dateFrom = date('Y-m-d', strtotime('tomorrow')) . ' 00:00:00';
+            $dateTo = date('Y-m-d', strtotime('tomorrow')) . ' 23:59:59';
+            break;
+        case 'overdue':
+            $dateTo = date('Y-m-d', strtotime('yesterday')) . ' 23:59:59';
+            break;
+        default:
+            break;
+    }
+
+    return
+    [
+        'dateFrom' => $dateFrom,
+        'dateTo' => $dateTo,
+    ];
+}
+
+function notifyTasks($mysqli, $dateTo, $dateFrom, $statusCut)
+{
+    $request = "
+        select tasks.name as task_name, users.email, users.name as user_name, users.id
+        from tasks left join users 
+        on tasks.user_id = users.id 
+        where tasks.status != ?
+        and tasks.date_deadline between ? and ?
+        ORDER BY users.email";
+    $stmt = mysqli_prepare($mysqli, $request);
+    if ($stmt === false) {
+            die('mysqli_prepare is not complited');
+    }
+    mysqli_stmt_bind_param($stmt, 'sss', $statusCut, $dateTo, $dateFrom);
+    $check_sql = mysqli_stmt_execute($stmt);
+    if ($check_sql === false) {
+            die('mysqli_stmt_execute is not complited');
+    }
+    $stmt_res = mysqli_stmt_get_result($stmt);
+    $result = mysqli_fetch_all($stmt_res, MYSQLI_ASSOC);
+    return $result;
 }

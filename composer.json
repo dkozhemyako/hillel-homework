@@ -1,6 +1,7 @@
 {
     "require": {
-        "wixel/gump": "^2.0"
+        "wixel/gump": "^2.0",
+        "symfony/mailer": "^6.2"
     },
     "autoload": {
         "files": [
